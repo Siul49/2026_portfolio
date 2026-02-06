@@ -30,7 +30,7 @@ export default function Projects() {
       description: "Next.js와 React를 활용한 반응형 수강신청 프론트엔드 (Next 15, Tailwind v4)",
       tags: ["Next.js", "React", "Tailwind"],
       featured: false,
-      link: "#"
+      link: "/projects/ddip"
     },
     {
       id: "04",
@@ -39,7 +39,7 @@ export default function Projects() {
       description: "HTML/CSS/JS 기반의 시간표 생성 및 관리 웹 애플리케이션",
       tags: ["HTML", "CSS", "JavaScript"],
       featured: false,
-      link: "#"
+      link: "/projects/timetable"
     },
     {
       id: "05",
