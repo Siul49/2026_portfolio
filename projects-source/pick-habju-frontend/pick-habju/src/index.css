@@ -1,0 +1,452 @@
+@import 'tailwindcss' layer(base);
+@import 'tailwindcss/theme' layer(theme);
+@import 'tailwindcss/utilities' layer(utilities);
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('./assets/fonts/pretendard/PretendardVariable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* 스크롤바 숨기기 */
+  html {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE & Edge */
+  }
+
+  html::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+  }
+
+  body {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE & Edge */
+  }
+
+  body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+  }
+}
+
+@layer theme {
+  @theme {
+    --font-sans: 'Pretendard', 'Inter', sans-serif;
+
+    --color-primary-white: #ffffff;
+    --color-primary-black: #000000;
+    --color-blue-300: #d5ecff;
+    --color-blue-500: #048cfc;
+
+    --color-gray-100: #f1f1f1;
+    --color-gray-200: #e6e6e6;
+    --color-gray-300: #afafaf;
+    --color-gray-400: #7c7c7c;
+    --color-gray-500: #4b5563;
+    --color-gray-600: #444444;
+    --color-gray-booked: #282828b3;
+
+    --color-yellow-300: #fffbf0;
+    --color-yellow-700: #fccd28;
+    --color-yellow-900: #f5be00;
+
+    --color-red-400: #dc5b6d;
+    --color-red-500: #ff383c;
+
+    --color-green: #2bbf53;
+
+    --color-text-black: #121212;
+    --color-text-gray: #636363;
+    --color-text-light-gray: #9c9c9c;
+    --color-text-white: #ffffff;
+
+    --font-hero-headline-weight: 700;
+    --font-hero-headline-size: 24px;
+    --line-height-hero-headline: normal;
+    --letter-spacing-hero-headline: 0.05em;
+
+    --font-hero-info-weight: 600;
+    --font-hero-info-size: 16px;
+    --line-height-hero-info: normal;
+    --letter-spacing-hero-info: 0.03em;
+
+    --font-hero-edit-weight: 600;
+    --font-hero-edit-size: 14px;
+    --line-height-hero-edit: normal;
+    --letter-spacing-hero-edit: 0.03em;
+    --text-decoration-hero-edit: underline;
+
+    --font-card-title-weight: 600;
+    --font-card-title-size: 19px;
+    --line-height-card-title: normal;
+    --letter-spacing-card-title: 0.02em;
+
+    --font-card-price-num-weight: 600;
+    --font-card-price-num-size: 20px;
+    --line-height-card-price-num: normal;
+    --letter-spacing-card-price-num: 0em;
+
+    --font-card-price-text-weight: 600;
+    --font-card-price-text-size: 13px;
+    --line-height-card-price-text: normal;
+    --letter-spacing-card-price-text: 0.01em;
+
+    --font-card-info-weight: 600;
+    --font-card-info-size: 12px;
+    --line-height-card-info: normal;
+    --letter-spacing-card-info: 0.01em;
+
+    --font-card-book-weight: 600;
+    --font-card-book-size: 13px;
+    --line-height-card-book: normal;
+    --letter-spacing-card-book: 0.01em;
+    --text-decoration-card-book: underline;
+
+    --font-modal-default-weight: 600;
+    --font-modal-default-size: 16px;
+    --line-height-modal-default: 24px;
+    --letter-spacing-modal-default: 0.03em;
+
+    --font-modal-call-weight: 600;
+    --font-modal-call-size: 14px;
+    --line-height-modal-call: normal;
+    --letter-spacing-modal-call: 0.03em;
+
+    --font-modal-description-weight: 500;
+    --font-modal-description-size: 16px;
+    --line-height-modal-description: 14px;
+    --letter-spacing-modal-description: 0.03em;
+
+    --font-modal-calctype-weight: 600;
+    --font-modal-calctype-size: 16px;
+    --line-height-modal-calctype: 14px;
+    --letter-spacing-modal-calctype: 0.03em;
+
+    --font-modal-calcdetail-weight: 500;
+    --font-modal-calcdetail-size: 14px;
+    --line-height-modal-calcdetail: 20px;
+    --letter-spacing-modal-calcdetail: 0.03em;
+
+    --font-modal-timepicker-weight: 500;
+    --font-modal-timepicker-size: 28px;
+    --line-height-modal-timepicker: 44px;
+    --letter-spacing-modal-timepicker: 0.03em;
+
+    --font-modal-num-weight: 500;
+    --font-modal-num-size: 18px;
+    --line-height-modal-num: normal;
+    --letter-spacing-modal-num: 0.07em;
+
+    --font-price-chip-weight: 600;
+    --font-price-chip-size: 14px;
+    --line-height-price-chip: normal;
+    --letter-spacing-price-chip: 0.03em;
+    --font-price-chip-hover-size: 19px;
+
+    --font-cluster-weight: 700;
+    --font-cluster-size: 18px;
+    --line-height-cluster: 24px;
+    --letter-spacing-cluster: 0.03em;
+
+    --font-summary-weight: 500;
+    --font-summary-size: 14px;
+    --line-height-summary: normal;
+    --letter-spacing-summary: 0.03em;
+
+    --font-footer-button-weight: 500;
+    --font-footer-button-size: 12px;
+    --line-height-footer-button: normal;
+    --letter-spacing-footer-button: 0.03em;
+
+    --font-footer-copyright-weight: 300;
+    --font-footer-copyright-size: 12px;
+    --line-height-footer-copyright: normal;
+    --letter-spacing-footer-copyright: 0.03em;
+
+    --font-footer-email-weight: 400;
+    --font-footer-email-size: 12px;
+    --line-height-footer-email: normal;
+    --letter-spacing-footer-email: 0.03em;
+
+    --font-hero-info-weight: 600;
+    --font-hero-info-size: 16px;
+    --line-height-hero-info: normal;
+    --letter-spacing-hero-info: 0.03em;
+
+    --box-shadow-card: 4px 4px 10px 0px rgba(0, 0, 0, 0.25);
+    --box-shadow-search: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+    --box-shadow-filter: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+  }
+}
+
+@tailwind utilities;
+
+@layer utilities {
+  /* Text Shadows */
+  .text-shadow-sm {
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+  }
+  .text-shadow-md {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.55);
+  }
+  .text-shadow-lg {
+    text-shadow: 0 3px 8px rgba(0, 0, 0, 0.6);
+  }
+  /* Font family */
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+
+  /* Hero Area */
+  .font-hero-headline {
+    font-family: var(--font-sans);
+    font-weight: var(--font-hero-headline-weight);
+    font-size: var(--font-hero-headline-size);
+    line-height: var(--line-height-hero-headline);
+    letter-spacing: var(--letter-spacing-hero-headline);
+  }
+  .font-hero-info {
+    font-family: var(--font-sans);
+    font-weight: var(--font-hero-info-weight);
+    font-size: var(--font-hero-info-size);
+    line-height: var(--line-height-hero-info);
+    letter-spacing: var(--letter-spacing-hero-info);
+  }
+  .font-hero-edit {
+    font-family: var(--font-sans);
+    font-weight: var(--font-hero-edit-weight);
+    font-size: var(--font-hero-edit-size);
+    line-height: var(--line-height-hero-edit);
+    letter-spacing: var(--letter-spacing-hero-edit);
+  }
+  .text-decoration-hero-edit {
+    text-decoration: var(--text-decoration-hero-edit);
+  }
+
+  /* Card Area */
+  .font-card-title {
+    font-family: var(--font-sans);
+    font-weight: var(--font-card-title-weight);
+    font-size: var(--font-card-title-size);
+    line-height: var(--line-height-card-title);
+    letter-spacing: var(--letter-spacing-card-title);
+  }
+  .font-card-price-num {
+    font-family: var(--font-sans);
+    font-weight: var(--font-card-price-num-weight);
+    font-size: var(--font-card-price-num-size);
+    line-height: var(--line-height-card-price-num);
+    letter-spacing: var(--letter-spacing-card-price-num);
+  }
+  .font-card-price-text {
+    font-family: var(--font-sans);
+    font-weight: var(--font-card-price-text-weight);
+    font-size: var(--font-card-price-text-size);
+    line-height: var(--line-height-card-price-text);
+    letter-spacing: var(--letter-spacing-card-price-text);
+  }
+  .font-card-partial {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.8125rem; /* 13px */
+    line-height: normal;
+    letter-spacing: -0.01625rem;
+    color: var(--color-blue-500);
+  }
+  .font-card-info {
+    font-family: var(--font-sans);
+    font-weight: var(--font-card-info-weight);
+    font-size: var(--font-card-info-size);
+    line-height: var(--line-height-card-info);
+    letter-spacing: var(--letter-spacing-card-info);
+  }
+  .font-card-book {
+    font-family: var(--font-sans);
+    font-weight: var(--font-card-book-weight);
+    font-size: var(--font-card-book-size);
+    line-height: var(--line-height-card-book);
+    letter-spacing: var(--letter-spacing-card-book);
+  }
+  .text-decoration-card-book {
+    text-decoration: var(--text-decoration-card-book);
+  }
+
+  .font-price-chip {
+    font-family: var(--font-sans);
+    font-weight: var(--font-price-chip-weight);
+    font-size: var(--font-price-chip-size);
+    line-height: var(--line-height-price-chip);
+    letter-spacing: var(--letter-spacing-price-chip);
+  }
+  .font-price-chip:hover {
+    font-size: var(--font-price-chip-hover-size);
+  }
+  .font-cluster {
+    font-family: var(--font-sans);
+    font-weight: var(--font-cluster-weight);
+    font-size: var(--font-cluster-size);
+    line-height: var(--line-height-cluster);
+    letter-spacing: var(--letter-spacing-cluster);
+  }
+  .font-summary {
+    font-family: var(--font-sans);
+    font-weight: var(--font-summary-weight);
+    font-size: var(--font-summary-size);
+    line-height: var(--line-height-summary);
+    letter-spacing: var(--letter-spacing-summary);
+  }
+
+  /* Modal */
+  .font-modal-default {
+    font-family: var(--font-sans);
+    font-weight: var(--font-modal-default-weight);
+    font-size: var(--font-modal-default-size);
+    line-height: var(--line-height-modal-default);
+    letter-spacing: var(--letter-spacing-modal-default);
+  }
+
+  /* Footer */
+  .font-footer-button {
+    font-family: var(--font-sans);
+    font-weight: var(--font-footer-button-weight);
+    font-size: var(--font-footer-button-size);
+    line-height: var(--line-height-footer-button);
+    letter-spacing: var(--letter-spacing-footer-button);
+  }
+  .font-footer-copyright {
+    font-family: var(--font-sans);
+    font-weight: var(--font-footer-copyright-weight);
+    font-size: var(--font-footer-copyright-size);
+    line-height: var(--line-height-footer-copyright);
+    letter-spacing: var(--letter-spacing-footer-copyright);
+  }
+  .font-footer-email {
+    font-family: var(--font-sans);
+    font-weight: var(--font-footer-email-weight);
+    font-size: var(--font-footer-email-size);
+    line-height: var(--line-height-footer-email);
+    letter-spacing: var(--letter-spacing-footer-email);
+  }
+  .font-modal-call {
+    font-family: var(--font-sans);
+    font-weight: var(--font-modal-call-weight);
+    font-size: var(--font-modal-call-size);
+    line-height: var(--line-height-modal-call);
+    letter-spacing: var(--letter-spacing-modal-call);
+  }
+  .font-modal-description {
+    font-family: var(--font-sans);
+    font-weight: var(--font-modal-description-weight);
+    font-size: var(--font-modal-description-size);
+    line-height: var(--line-height-modal-description);
+    letter-spacing: var(--letter-spacing-modal-description);
+  }
+  .font-modal-calctype {
+    font-family: var(--font-sans);
+    font-weight: var(--font-modal-calctype-weight);
+    font-size: var(--font-modal-calctype-size);
+    line-height: var(--line-height-modal-calctype);
+    letter-spacing: var(--letter-spacing-modal-calctype);
+  }
+  .font-modal-calcdetail {
+    font-family: var(--font-sans);
+    font-weight: var(--font-modal-calcdetail-weight);
+    font-size: var(--font-modal-calcdetail-size);
+    line-height: var(--line-height-modal-calcdetail);
+    letter-spacing: var(--letter-spacing-modal-calcdetail);
+  }
+  .font-modal-timepicker {
+    font-family: var(--font-sans);
+    font-weight: var(--font-modal-timepicker-weight);
+    font-size: var(--font-modal-timepicker-size);
+    line-height: var(--line-height-modal-timepicker);
+    letter-spacing: var(--letter-spacing-modal-timepicker);
+  }
+  .font-modal-num {
+    font-family: var(--font-sans);
+    font-weight: var(--font-modal-num-weight);
+    font-size: var(--font-modal-num-size);
+    line-height: var(--line-height-modal-num);
+    letter-spacing: var(--letter-spacing-modal-num);
+  }
+
+  /* Button */
+  .font-button {
+    font-family: var(--font-sans);
+    font-weight: var(--font-hero-info-weight);
+    font-size: var(--font-hero-info-size);
+    line-height: var(--line-height-hero-info);
+    letter-spacing: var(--letter-spacing-hero-info);
+  }
+
+  /* Box Shadows */
+  .shadow-card {
+    box-shadow: var(--box-shadow-card);
+  }
+  .shadow-search {
+    box-shadow: var(--box-shadow-search);
+  }
+  .shadow-filter {
+    box-shadow: var(--box-shadow-filter);
+  }
+
+  /* Toast keyframes */
+  @keyframes toast-in {
+    0% {
+      transform: translateY(8px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  @keyframes toast-out {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-8px);
+      opacity: 0;
+    }
+  }
+
+  /* Image loading shimmer effect */
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  /* Time Picker Scroll */
+  .scroll-picker {
+    scroll-snap-type: y mandatory;
+  }
+  .scroll-picker li {
+    scroll-snap-align: center;
+  }
+  .scroll-picker {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE & Edge */
+  }
+  .scroll-picker::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+  }
+
+  .scrollbar-stable {
+    scrollbar-gutter: stable;
+  }
+}

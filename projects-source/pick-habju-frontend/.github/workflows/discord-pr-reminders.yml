@@ -1,0 +1,272 @@
+name: Discord PR SLA & Merge Reminders
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  pull-requests: write
+  issues: write
+  contents: read
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PRs and remind
+        uses: actions/github-script@v7
+        env:
+          DISCORD_WEBHOOK_PR_ALERTS: ${{ secrets.DISCORD_WEBHOOK_PR_ALERTS }}
+        with:
+          script: |
+            const webhook = process.env.DISCORD_WEBHOOK_PR_ALERTS;
+            if (!webhook) throw new Error("Missing DISCORD_WEBHOOK_PR_ALERTS secret.");
+
+            // ✅ 긴급 멘션 하드코딩 (priority/high 관련 SLA 경고에 사용)
+            const URGENT_MENTIONS = [
+                "<@317972480704774144>",
+                "<@1221742784759988237>",
+            ].join(" ");
+
+            // ---- Bot actors to ignore as "reviewers" ----
+            // Claude 액션이 남기는 코멘트는 "리뷰"가 아니라서 원래 카운트 안 됨.
+            // 여기서는 "리뷰 작성자"가 봇인 경우를 배제.
+            const BOT_ACTORS = new Set([
+              "github-actions[bot]",
+              "dependabot[bot]",
+              "vercel[bot]",
+              "claude-ai[bot]",
+              "anthropic-claude[bot]",
+              "codiumai[bot]"
+            ]);
+
+            // ---- Internal reminder marker labels (avoid duplicate notifications) ----
+            const BOT_LABELS = [
+              "bot/reminded-base-24h",
+              "bot/reminded-sla24-24h",
+              "bot/reminded-sla48-48h",
+              "bot/reminded-merge-48h",
+              "bot/reminded-merge-60h",
+              "bot/reminded-merge-72h"
+            ];
+
+            async function ensureLabel(name) {
+              try {
+                await github.rest.issues.getLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name
+                });
+              } catch (e) {
+                const status = (e && (e.status !== undefined ? e.status : (e.response && e.response.status)));
+                if (status === 404) {
+                  try {
+                    await github.rest.issues.createLabel({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      name,
+                      color: "ededed",
+                      description: "internal label used by reminder bot"
+                    });
+                  } catch (createErr) {
+                    try {
+                      const msg = "라벨 생성 권한 없음 또는 실패: " + name;
+                      if (typeof core !== "undefined" && core.warning) core.warning(msg); else console.warn(msg);
+                    } catch (_) {}
+                  }
+                }
+              }
+            }
+
+            for (const l of BOT_LABELS) {
+              await ensureLabel(l);
+            }
+
+            function hoursSince(iso) {
+              return (Date.now() - new Date(iso).getTime()) / (1000 * 60 * 60);
+            }
+
+            function hasLabel(pr, name) {
+              return (pr.labels || []).some(l => l.name === name);
+            }
+
+            async function addBotLabel(prNumber, label, pr) {
+              try {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: prNumber,
+                  labels: [label]
+                });
+                if (pr) {
+                  pr.labels = pr.labels || [];
+                  pr.labels.push({ name: label });
+                }
+              } catch (e) {
+                try {
+                  const status = (e && (e.status !== undefined ? e.status : (e.response && e.response.status)));
+                  const msg = (status === 403)
+                    ? "라벨 추가 권한 없음(403): " + label + " - Discord 알림만 전송됨."
+                    : "addBotLabel 실패: " + (e && e.message || String(e));
+                  if (typeof core !== "undefined" && core.warning) core.warning(msg); else console.warn(msg);
+                } catch (_) {}
+              }
+            }
+
+            async function sendDiscord({ content, title, pr, extraFields = [] }) {
+              const labels = (pr.labels || []).map(l => l.name);
+              const labelText = labels.length ? labels.join(", ") : "(none)";
+
+              const payload = {
+                content: content || "",
+                embeds: [{
+                  title,
+                  url: pr.html_url,
+                  description: `**${pr.title}**\nPR #${pr.number} • ${pr.base.ref} ← ${pr.head.ref}`,
+                  fields: [
+                    { name: "작성자", value: pr.user.login, inline: true },
+                    { name: "경과 시간", value: `${hoursSince(pr.created_at).toFixed(1)}h`, inline: true },
+                    { name: "라벨", value: labelText, inline: false },
+                    ...extraFields
+                  ],
+                  timestamp: new Date().toISOString()
+                }]
+              };
+
+              const res = await fetch(webhook, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+              });
+
+              if (!res.ok) {
+                const txt = await res.text();
+                throw new Error(`Discord webhook failed: ${res.status} ${txt}`);
+              }
+            }
+
+            // Count "valid reviews" per your rules:
+            // - exclude PR author
+            // - exclude bots
+            // - count only Pull Request Reviews (not comments), so Claude comments are ignored automatically
+            // - CODEOWNER 기준:
+            //    If requested_reviewers exist => only those reviewers count
+            //    If only requested_teams exist => accept any eligible human review (stable compromise)
+            async function getValidReviewCount(prNumber, prAuthor) {
+              const [reviewsRes, prRes] = await Promise.all([
+                github.rest.pulls.listReviews({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: prNumber,
+                  per_page: 100
+                }),
+                github.rest.pulls.get({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: prNumber
+                })
+              ]);
+
+              const requestedReviewers = new Set((prRes.data.requested_reviewers || []).map(u => u.login));
+              const hasRequestedReviewers = requestedReviewers.size > 0;
+              const hasRequestedTeams = (prRes.data.requested_teams || []).length > 0;
+
+              const eligibleStates = new Set(["APPROVED", "CHANGES_REQUESTED", "COMMENTED"]);
+              const reviewers = new Set();
+
+              for (const r of reviewsRes.data) {
+                const user = r.user?.login;
+                if (!user) continue;
+                if (!eligibleStates.has(r.state)) continue;
+                if (user === prAuthor) continue;
+                if (BOT_ACTORS.has(user)) continue;
+
+                if (hasRequestedReviewers) {
+                  if (!requestedReviewers.has(user)) continue;
+                } else if (hasRequestedTeams) {
+                  // accept any eligible human review
+                } else {
+                  // no requested reviewers/teams => accept any eligible human review
+                }
+
+                reviewers.add(user);
+              }
+
+              return reviewers.size;
+            }
+
+            // List open PRs (not merged)
+            const prs = await github.paginate(github.rest.pulls.list, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "open",
+              per_page: 100
+            });
+
+            // PR당 run당 알림 1개만 전송: 만족하는 조건 중 우선순위 가장 높은 것만 선택
+            // 우선순위: SLA 24h > SLA 48h > Base 24h > Merge 72h > Merge 60h > Merge 48h
+            for (const pr of prs) {
+              if (pr.draft) continue;
+
+              const prNumber = pr.number;
+              const ageH = hoursSince(pr.created_at);
+              const labels = (pr.labels || []).map(l => l.name);
+
+              const hasPriorityHigh = labels.includes("priority/high");
+              const hasReview24 = labels.includes("review/24h");
+              const hasReview48 = labels.includes("review/48h");
+
+              const requiredReviews = 1;
+              const reviewCount = await getValidReviewCount(prNumber, pr.user.login);
+              const reviewStatus = `${reviewCount}/${requiredReviews}`;
+
+              const candidates = [];
+
+              if (hasPriorityHigh && hasReview24 && ageH >= 24 && reviewCount < requiredReviews && !hasLabel(pr, "bot/reminded-sla24-24h")) {
+                candidates.push({ priority: 1, label: "bot/reminded-sla24-24h", content: URGENT_MENTIONS || "@here", title: "🚨 긴급 PR: review/24h 리뷰 응답 목표를 넘겼어요", extraFields: [
+                  { name: "유효 리뷰 수 (CODEOWNER 기준)", value: reviewStatus, inline: true },
+                  { name: "지금 필요한 것", value: "CODEOWNER 기준으로 리뷰 1개 이상을 남겨주세요.", inline: false }
+                ]});
+              }
+              if (hasPriorityHigh && hasReview48 && ageH >= 48 && reviewCount < requiredReviews && !hasLabel(pr, "bot/reminded-sla48-48h")) {
+                candidates.push({ priority: 2, label: "bot/reminded-sla48-48h", content: URGENT_MENTIONS || "@here", title: "🚨 긴급 PR: review/48h 리뷰 응답 목표를 넘겼어요", extraFields: [
+                  { name: "유효 리뷰 수 (CODEOWNER 기준)", value: reviewStatus, inline: true },
+                  { name: "지금 필요한 것", value: "CODEOWNER 기준으로 리뷰 1개 이상을 남겨주세요.", inline: false }
+                ]});
+              }
+              if (ageH >= 24 && reviewCount < requiredReviews && !hasLabel(pr, "bot/reminded-base-24h")) {
+                candidates.push({ priority: 3, label: "bot/reminded-base-24h", content: URGENT_MENTIONS || "@here", title: "⏰ 24시간 경과: 리뷰가 아직 부족해요", extraFields: [
+                  { name: "유효 리뷰 수 (CODEOWNER 기준)", value: reviewStatus, inline: true },
+                  { name: "요청", value: "첫 리뷰 반응(코멘트/승인/수정요청)을 남겨주세요.", inline: false }
+                ]});
+              }
+              if (ageH >= 72 && !hasLabel(pr, "bot/reminded-merge-72h")) {
+                candidates.push({ priority: 4, label: "bot/reminded-merge-72h", content: "@here", title: "🔁 머지 리마인드: PR이 72시간째 열려 있어요", extraFields: [
+                  { name: "유효 리뷰 수 (CODEOWNER 기준)", value: reviewStatus, inline: true }
+                ]});
+              }
+              if (ageH >= 60 && !hasLabel(pr, "bot/reminded-merge-60h")) {
+                candidates.push({ priority: 5, label: "bot/reminded-merge-60h", content: "@here", title: "🔁 머지 리마인드: PR이 60시간째 열려 있어요", extraFields: [
+                  { name: "유효 리뷰 수 (CODEOWNER 기준)", value: reviewStatus, inline: true }
+                ]});
+              }
+              if (ageH >= 48 && !hasLabel(pr, "bot/reminded-merge-48h")) {
+                candidates.push({ priority: 6, label: "bot/reminded-merge-48h", content: "@here", title: "🔁 머지 리마인드: PR이 48시간째 열려 있어요", extraFields: [
+                  { name: "유효 리뷰 수 (CODEOWNER 기준)", value: reviewStatus, inline: true }
+                ]});
+              }
+
+              if (candidates.length === 0) continue;
+
+              candidates.sort((a, b) => a.priority - b.priority);
+              const chosen = candidates[0];
+
+              await sendDiscord({
+                content: chosen.content,
+                title: chosen.title,
+                pr,
+                extraFields: chosen.extraFields
+              });
+              await addBotLabel(prNumber, chosen.label, pr);
+            }
