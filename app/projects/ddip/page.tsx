@@ -15,12 +15,12 @@ export default function DdipDetail() {
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-5xl md:text-7xl font-serif font-bold mb-6"
+              className="text-5xl md:text-7xl font-serif font-bold text-[var(--color-deep-navy)] mb-6"
             >
               DDIP
             </motion.h1>
             <p className="text-xl text-gray-600 font-light max-w-2xl">
-              Next.js와 React를 활용한 반응형 수강신청 프론트엔드
+              이웃과 함께하는 식재료 공동구매 및 나눔 플랫폼
             </p>
             <div className="mt-8">
                <Link href="/projects/ddip/demo" className="inline-block bg-[var(--color-deep-navy)] text-white px-8 py-4 rounded-full font-bold hover:bg-opacity-90 transition-all">
@@ -46,21 +46,21 @@ export default function DdipDetail() {
       </header>
 
       {/* Content */}
-      <section className="grid grid-cols-1 md:grid-cols-12 gap-12">
+      <section className="grid grid-cols-1 md:grid-cols-12 gap-12 text-[var(--color-deep-navy)]">
         <div className="md:col-span-4">
-           <h3 className="text-lg font-bold mb-4 font-serif">Key Features</h3>
+           <h3 className="text-lg font-bold mb-4 font-serif">Community Focused</h3>
            <p className="text-sm text-gray-600 leading-relaxed font-light text-justify">
-             대규모 트래픽이 몰리는 수강신청 상황을 고려하여, 사용자에게 즉각적인 피드백을 제공하고 서버 부하를 시각적으로 인지할 수 있는 UX를 설계했습니다.
+             1인 가구의 증가와 물가 상승이라는 사회적 문제를 해결하기 위해, 근거리 이웃들과 소량의 식재료를 함께 사고 나누는 '딥(DDIP)' 서비스를 기획하고 개발했습니다.
            </p>
         </div>
         <div className="md:col-span-8">
-           <h3 className="text-2xl font-serif font-bold mb-6">Tech Stack Upgrade</h3>
+           <h3 className="text-2xl font-serif font-bold mb-6">State-driven Navigation</h3>
            <p className="text-gray-600 mb-6 font-light leading-relaxed">
-             최신 Next.js 15의 App Router와 React 19를 적극적으로 도입하여 성능을 최적화했습니다. 또한 Tailwind CSS v4를 활용하여 빌드 속도를 단축하고 생산성을 높였습니다.
+             복잡한 라우팅 대신 <strong>상태 기반 UI 전환 로직</strong>을 사용하여 싱글 페이지 내에서도 끊김 없는 사용자 경험을 제공합니다. <code>home</code>, <code>category</code>, <code>product</code>로 이어지는 흐름을 유기적으로 연결했습니다.
            </p>
-           <div className="p-6 bg-blue-50 border-l-4 border-[var(--color-serene-blue)] rounded-r-lg">
-              <p className="text-sm text-[var(--color-serene-blue)] font-medium italic">
-                "고성능 인터랙션을 위한 상태 최적화와 서버 사이드 렌더링의 조화를 탐구한 프로젝트입니다."
+           <div className="p-6 bg-[#FFFCED] border border-[#F3E5AB] rounded-lg">
+              <p className="text-sm text-[#B8860B] font-medium italic">
+                "따뜻하고 친근한 종이 질감의 디자인 테마를 통해 커뮤니티의 온기를 시각적으로 표현했습니다."
               </p>
            </div>
         </div>

@@ -26,9 +26,9 @@ export default function Projects() {
     {
       id: "03",
       title: "DDIP",
-      category: "Frontend",
-      description: "Next.js와 React를 활용한 반응형 수강신청 프론트엔드 (Next 15, Tailwind v4)",
-      tags: ["Next.js", "React", "Tailwind"],
+      category: "Community Commerce",
+      description: "이웃과 함께하는 식재료 공동구매 및 나눔 플랫폼. 상태 기반 UI 전환과 모듈화된 아키텍처 설계.",
+      tags: ["Next.js", "React", "Tailwind CSS"],
       featured: false,
       link: "/projects/ddip"
     },
