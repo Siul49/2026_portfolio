@@ -9,17 +9,17 @@ export default function Projects() {
       id: "01",
       title: "Pick Habju",
       category: "Crawling & LLM",
-      description: "LLM 기반 의미론적 크롤링으로 합주실 예약 경험 최적화",
-      tags: ["Python", "Django", "LLM"],
+      description: "LLM 기반 의미론적 크롤링으로 합주실 예약 경험 최적화. 기존 Rule-based 크롤러의 한계를 극복하고 데이터 정규화 성공률 92% 달성.",
+      tags: ["Python", "Django", "LLM", "Trafilatura"],
       featured: true, 
       link: "/projects/pick-habju"
     },
     {
       id: "02",
       title: "BIMO",
-      category: "AI Service",
-      description: "Gemini Vision으로 탑승권을 인식하는 AI 비행 컨시어지",
-      tags: ["Spring Boot", "Gemini", "FastAPI"],
+      category: "AI Concierge",
+      description: "Gemini Vision을 활용하여 탑승권 정보를 자동 추출하고 맞춤형 비행 가이드를 제공하는 개인 비행 비서 서비스.",
+      tags: ["FastAPI", "Gemini", "Firebase"],
       featured: false,
       link: "/projects/bimo"
     },
