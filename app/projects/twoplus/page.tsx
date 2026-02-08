@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import BrowserFrame from "../../components/ui/BrowserFrame";
 
 export default function TwoPlusDetail() {
   return (
@@ -9,10 +10,10 @@ export default function TwoPlusDetail() {
       {/* Header */}
       <header className="mb-20 border-b border-[var(--color-grid-line)] pb-10">
         <Link href="/" className="text-xs font-mono text-[var(--color-serene-blue)] hover:underline mb-8 block">← BACK TO HOME</Link>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
           <div className="md:col-span-8">
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-5xl md:text-7xl font-serif font-bold mb-6"
@@ -37,6 +38,17 @@ export default function TwoPlusDetail() {
               <span className="text-[var(--color-deep-navy)]">2024</span>
             </div>
           </div>
+        </div>
+
+        <div className="mt-8">
+          <a
+            href="/demo/twoplus/index.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-6 py-3 bg-[var(--color-serene-blue)] text-white rounded-lg font-medium hover:bg-[var(--color-deep-navy)] transition-colors"
+          >
+            TRY LIVE DEMO
+          </a>
         </div>
       </header>
 
@@ -65,6 +77,22 @@ export default function TwoPlusDetail() {
              React의 생명주기와 상태 관리를 깊이 있게 이해하는 계기가 되었습니다. 특히 컴포넌트 재사용성을 높이기 위한 Atomic Design Pattern을 적용해 보며, 유지보수 가능한 코드 구조에 대해 고민했습니다.
            </p>
         </div>
+      </section>
+
+      {/* Live Experience Section */}
+      <section className="mt-32 pt-12 border-t border-[var(--color-grid-line)]">
+        <h2 className="text-3xl font-serif font-bold mb-8">Live Experience</h2>
+        <p className="text-gray-600 mb-8 font-light leading-relaxed">
+          Twosea Technology 웹사이트의 인터랙티브 데모를 직접 경험해보세요. 반응형 디자인과 매끄러운 네비게이션, 동적 컴포넌트들을 실시간으로 확인할 수 있습니다.
+        </p>
+
+        <BrowserFrame title="demo/twoplus" openInNewTabUrl="/demo/twoplus/index.html">
+          <iframe
+            src="/demo/twoplus/index.html"
+            className="w-full h-[600px] bg-white"
+            title="TwoPlus Demo"
+          />
+        </BrowserFrame>
       </section>
     </article>
   );

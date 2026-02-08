@@ -22,6 +22,9 @@ export default function BimoDetail() {
             <p className="text-xl text-gray-600 font-light max-w-2xl">
               Gemini Vision을 활용한 탑승권 인식 기반 AI 비행 컨시어지 서비스
             </p>
+            <Link href="/projects/bimo/demo" className="inline-block bg-[var(--color-deep-navy)] text-white px-8 py-4 rounded-full font-bold hover:bg-opacity-90 transition-all mt-6">
+              TRY LIVE DEMO ↗
+            </Link>
           </div>
           <div className="md:col-span-4 flex flex-col gap-4 font-mono text-sm text-gray-500">
             <div className="flex justify-between border-b border-gray-200 pb-2">

@@ -22,6 +22,12 @@ export default function PickHabjuDetail() {
             <p className="text-xl text-gray-600 font-light max-w-2xl">
               LLM 기반 의미론적 추출(Semantic Extraction)을 도입하여, 기존 크롤러의 '취약성(Brittleness)'을 해결하다.
             </p>
+            <Link
+              href="/projects/pick-habju/demo"
+              className="inline-block bg-[var(--color-deep-navy)] text-white px-8 py-4 rounded-full font-bold hover:bg-opacity-90 transition-all mt-6"
+            >
+              TRY LIVE DEMO ↗
+            </Link>
           </div>
           <div className="md:col-span-4 flex flex-col gap-4 font-mono text-sm text-gray-500">
             <div className="flex justify-between border-b border-gray-200 pb-2">
