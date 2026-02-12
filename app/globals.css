@@ -1,12 +1,30 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-inter);
-  --color-serene-blue: #486581;
+  /* ─── Fonts ─────────────────────────────────────────── */
+  --font-sans: var(--font-inter), var(--font-noto-sans-kr), sans-serif;
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+  --font-noto-sans-kr: var(--font-noto-sans-kr);
+
+  /* ─── Brand Colors ──────────────────────────────────── */
   --color-deep-navy: #102A43;
+  --color-serene-blue: #486581;
   --color-cool-white: #F0F4F8;
-  --color-faded-blue: #BCCCDC; /* New: for that faded look */
+  --color-faded-blue: #BCCCDC;
   --color-grid-line: rgba(16, 42, 67, 0.05);
+
+  /* ─── Neutral Scale (editorial blue-gray palette) ──── */
+  --color-neutral-50: #F0F4F8;
+  --color-neutral-100: #D9E2EC;
+  --color-neutral-200: #BCCCDC;
+  --color-neutral-300: #9FB3C8;
+  --color-neutral-400: #829AB1;
+  --color-neutral-500: #627D98;
+  --color-neutral-600: #486581;
+  --color-neutral-700: #334E68;
+  --color-neutral-800: #243B53;
+  --color-neutral-900: #102A43;
 }
 
 :root {
@@ -20,7 +38,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Paper Grid Texture */
+/* ─── Paper Grid Texture ────────────────────────────── */
 .grid-background {
   background-size: 40px 40px;
   background-image:
@@ -34,7 +52,7 @@ body {
   z-index: -1;
 }
 
-/* Digital Grain Texture - Enhanced */
+/* ─── Digital Grain Texture ─────────────────────────── */
 .grain-overlay {
   position: fixed;
   top: 0;
@@ -43,12 +61,12 @@ body {
   height: 100%;
   pointer-events: none;
   z-index: 50;
-  opacity: 0.08; /* Slightly more visible */
+  opacity: 0.08;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   mix-blend-mode: multiply;
 }
 
-/* Editorial Layout Utilities */
+/* ─── Editorial Layout Utilities ────────────────────── */
 .vertical-text {
   writing-mode: vertical-rl;
   text-orientation: mixed;
