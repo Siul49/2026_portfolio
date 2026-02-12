@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(code --install-extension:*)",
+      "Bash(git ls-tree:*)",
+      "Bash(npx next build:*)",
+      "Bash(timeout 10 npx next dev:*)",
+      "Bash(curl:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: add interactive live demos for BIMO, Pick Habju, and TwoPlus projects\n\n- Create reusable BrowserFrame component \\(macOS-style browser chrome\\)\n- Add BIMO demo: step wizard simulating boarding pass scan → AI analysis → flight card → personalized guide\n- Add Pick Habju demo: music room search/filter/booking simulator with mock data\n- Add TwoPlus demo: static HTML recreation of company landing page via iframe\n- Refactor timetable page to use BrowserFrame component\n- Add \"TRY LIVE DEMO\" buttons to BIMO, Pick Habju, and TwoPlus project pages\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(npm run build:*)",
+      "Bash(dir:*)"
+    ]
+  }
+}

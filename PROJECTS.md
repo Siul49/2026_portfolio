@@ -85,5 +85,44 @@
 
 ---
 
+## 7. PrimeRing (프라임링)
+**"AI 기반 감정 분석 스마트 캘린더 & 다이어리"**
+
+*   **개요:** 사용자의 일정을 관리하고 일기를 작성할 때 AI가 자동으로 감정을 분석하여 더 나은 자기 이해를 돕는 데스크톱 애플리케이션입니다.
+*   **기술 스택:**
+    *   **Front-end:** React 19, TypeScript, Vite, CSS Modules
+    *   **Desktop:** Electron
+    *   **State Management:** Zustand
+    *   **Database:** Firebase Firestore
+    *   **AI:** Google Gemini API
+    *   **UI Libraries:** Framer Motion, React Hot Toast
+*   **핵심 기능:**
+    *   **스마트 캘린더:** 월간 뷰로 이벤트를 쉽게 관리하고 커스텀 카테고리 생성 및 색상 설정.
+    *   **AI 다이어리:** Gemini API를 활용한 자동 감정 분석.
+    *   **테마 전환:** 라이트/다크 모드 지원.
+    *   **실시간 동기화:** Firebase Firestore 기반 데이터 저장.
+    *   **크로스 플랫폼:** Electron 기반 Windows/macOS/Linux 지원.
+
+---
+
+## 8. LMS Downloader (LMS 다운로더)
+**"숭실대학교 Canvas LMS 강의 자료 자동 다운로드"**
+
+*   **개요:** 숭실대학교 Canvas LMS에서 강의 자료를 자동으로 다운로드하여 로컬에 저장하는 Python 스크립트입니다. 매번 강의 자료를 일일이 다운로드하는 번거로움을 해결하고, 모든 자료를 체계적으로 정리하여 관리할 수 있습니다.
+*   **기술 스택:**
+    *   **Language:** Python
+    *   **Browser Automation:** Playwright
+    *   **Environment:** python-dotenv
+    *   **Concurrency:** concurrent.futures (ProcessPoolExecutor)
+*   **핵심 기능:**
+    *   **자동 로그인:** 숭실대학교 통합 로그인 시스템 자동화.
+    *   **강의 목록 자동 탐색:** 현재 학기의 모든 강의 자동으로 검색 및 필터링.
+    *   **자동 다운로드:** 주차별 강의 자료(PDF, PPTX, HWP, ZIP 등) 자동 다운로드.
+    *   **자동 정리:** 강의명/주차별로 자동 폴더 생성 및 파일 저장.
+    *   **병렬 처리:** ProcessPoolExecutor를 활용한 다중 강의 동시 처리.
+    *   **디버깅 지원:** 다운로드 실패 시 스크린샷 자동 저장.
+
+---
+
 작성일: 2026-02-07
 작성자: 설 (Seol) - 김경수님의 AI 비서
