@@ -43,17 +43,17 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             transition={smoothSlow}
-            className="max-w-5xl text-5xl leading-[0.95] font-serif font-bold tracking-tighter text-deep-navy md:text-8xl"
+            className="max-w-[1120px] font-serif font-bold tracking-[-0.045em] text-deep-navy"
           >
-            <span className="font-light text-deep-navy/75">
+            <span className="block text-[clamp(2.7rem,5vw,4.8rem)] leading-[1.16] font-light text-deep-navy/58">
               개발 경험을 바탕으로
             </span>
-            <br />
-            무엇을 왜 먼저 만들지
-            <br />
-            고민하는{" "}
-            <span className="font-light italic text-serene-blue">PM</span>{" "}
-            지원자입니다.
+            <span className="mt-5 block text-[clamp(3.45rem,7.5vw,6rem)] leading-[1.08]">
+              무엇을 왜 먼저 만들지
+            </span>
+            <span className="mt-5 block text-[clamp(3.2rem,6.9vw,5.5rem)] leading-[1.12]">
+              고민하는 <span className="font-light italic text-serene-blue/85">PM</span> 지원자입니다.
+            </span>
           </motion.h1>
 
           <motion.p
@@ -61,13 +61,12 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             transition={{ ...smoothSlow, delay: 0.8 }}
-            className="mt-8 max-w-2xl text-lg leading-relaxed font-light text-neutral-600 md:text-xl"
+            className="mt-10 max-w-3xl text-[1.02rem] leading-[1.85] font-light text-neutral-600 md:text-[1.16rem]"
           >
-            픽합주에서 백엔드 팀 리드를 맡으며, 좋은 서비스를 만드는 데에는
-            구현만큼 문제 정의와 우선순위 설정, 팀이 같은 방향으로 움직이게
-            만드는 역할이 중요하다는 것을 배웠습니다. 이제 그 경험을 PM의
-            언어로 확장하고 싶습니다.
-            <span className="mt-2 block font-mono text-sm text-serene-blue">
+            픽합주에서 백엔드 팀 리드를 맡으며, 좋은 서비스를 만드는 데에는 구현만큼 문제
+            정의와 우선순위 설정, 팀이 같은 방향으로 움직이게 만드는 역할이 중요하다는 것을
+            배웠습니다. 이제 그 경험을 PM의 언어로 확장하고 싶습니다.
+            <span className="mt-3 block font-mono text-sm text-serene-blue">
               {"// Learning to turn development experience into product thinking"}
             </span>
           </motion.p>
