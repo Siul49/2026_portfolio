@@ -66,9 +66,6 @@ export default function Hero() {
             픽합주에서 백엔드 팀 리드를 맡으며, 좋은 서비스를 만드는 데에는 구현만큼 문제
             정의와 우선순위 설정, 팀이 같은 방향으로 움직이게 만드는 역할이 중요하다는 것을
             배웠습니다. 이제 그 경험을 PM의 언어로 확장하고 싶습니다.
-            <span className="mt-3 block font-mono text-sm text-serene-blue">
-              {"// Learning to turn development experience into product thinking"}
-            </span>
           </motion.p>
 
           <motion.div
