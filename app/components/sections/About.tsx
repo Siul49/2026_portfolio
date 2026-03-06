@@ -112,10 +112,13 @@ export default function About() {
               variants={fadeInUp}
               className="rounded-sm border border-grid-line bg-neutral-50/70 p-6"
             >
-              <h2 className="text-3xl leading-tight font-serif font-bold text-deep-navy md:text-4xl">
+              <h2 className="text-[2.6rem] leading-[1.08] font-serif font-bold tracking-[-0.045em] text-deep-navy md:text-[3.2rem]">
+                <span className="block">
                 개발 경험을 바탕으로
-                <br />
+                </span>
+                <span className="mt-1.5 block text-[0.93em]">
                 PM을 준비하고 있습니다
+                </span>
               </h2>
               <p className="mt-4 text-base leading-relaxed font-light text-neutral-600">
                 백엔드 개발자로 프로젝트를 해오며, 구현 자체보다 문제를 어떻게
