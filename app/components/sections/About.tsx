@@ -1,13 +1,37 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  fadeInUp,
-  fadeInLeft,
-  staggerContainer,
-} from "../../lib/animations";
+import { fadeInUp, fadeInLeft, staggerContainer } from "../../lib/animations";
 import Container from "../../components/ui/Container";
 import Badge from "../../components/ui/Badge";
+
+const highlights = [
+  {
+    label: "92%",
+    description: "데이터 수집 성공률 유지",
+    note: "2024 프로토타입 기준",
+  },
+  {
+    label: "20%+",
+    description: "LLM 인식률 개선",
+    note: "이미지 전처리 최적화",
+  },
+  {
+    label: "Focus",
+    description: "Backend · AI · Automation",
+    note: "실서비스형 API와 파이프라인 중심",
+  },
+];
+
+const stack = [
+  "Python",
+  "Django",
+  "FastAPI",
+  "GraphQL",
+  "Playwright",
+  "Firebase",
+  "LLM",
+];
 
 export default function About() {
   return (
@@ -15,119 +39,116 @@ export default function About() {
       as="section"
       size="wide"
       id="about"
-      className="py-32 border-t border-grid-line"
+      className="border-t border-grid-line py-32"
     >
       <motion.div
         variants={staggerContainer}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="grid grid-cols-1 md:grid-cols-12 gap-12"
+        className="grid grid-cols-1 gap-12 md:grid-cols-12"
       >
-        {/* ── Left Column ──────────────────────────────────────── */}
         <motion.div
           variants={fadeInLeft}
-          className="md:col-span-4 flex flex-col gap-8"
+          className="flex flex-col gap-8 md:col-span-4"
         >
-          {/* Section label */}
           <div>
-            <span className="font-mono text-xs tracking-widest uppercase text-neutral-400">
-              {"// ABOUT THE ARCHITECT"}
+            <span className="font-mono text-xs tracking-widest text-neutral-500 uppercase">
+              {"// Profile"}
             </span>
-            <div className="mt-3 h-[1px] bg-deep-navy opacity-10 w-full" />
+            <div className="mt-3 h-[1px] w-full bg-deep-navy opacity-10" />
           </div>
 
-          {/* Pull quote */}
-          <div className="relative pl-5">
-            {/* Vertical accent line */}
-            <div className="absolute left-0 top-0 w-[1px] h-full bg-deep-navy opacity-20" />
-            <blockquote className="font-serif italic text-2xl md:text-3xl leading-snug text-deep-navy">
-              &ldquo;코드는 논리의 언어이자,
-              <br />
-              꿈의 설계도이다.&rdquo;
-            </blockquote>
+          <div className="rounded-sm border border-grid-line bg-neutral-50/70 p-6">
+            <p className="font-mono text-xs tracking-[0.22em] text-serene-blue uppercase">
+              Kim Gyeongsu
+            </p>
+            <h2 className="mt-4 text-3xl leading-tight font-serif font-bold text-deep-navy md:text-4xl">
+              Backend Developer
+            </h2>
+            <p className="mt-4 text-base leading-relaxed font-light text-neutral-600">
+              유지보수 비용이 낮은 데이터 수집 시스템과 멀티모달 입력 기반
+              백엔드를 설계합니다.
+            </p>
           </div>
 
-          {/* Decorative column ornament */}
-          <div className="hidden md:flex flex-col items-start gap-2 mt-auto opacity-20">
-            <div className="w-8 h-[1px] bg-deep-navy" />
-            <div className="w-4 h-[1px] bg-deep-navy" />
-            <div className="w-12 h-[1px] bg-deep-navy" />
+          <div className="grid gap-4">
+            {highlights.map((item) => (
+              <div key={item.label} className="border-b border-grid-line pb-4">
+                <p className="font-serif text-2xl text-deep-navy">{item.label}</p>
+                <p className="mt-1 text-sm text-neutral-600">{item.description}</p>
+                <p className="mt-1 font-mono text-[11px] tracking-widest text-neutral-500 uppercase">
+                  {item.note}
+                </p>
+              </div>
+            ))}
           </div>
         </motion.div>
 
-        {/* ── Right Column ─────────────────────────────────────── */}
-        <div className="md:col-span-8 flex flex-col gap-8">
-          {/* Chapter label */}
+        <div className="flex flex-col gap-8 md:col-span-8">
           <motion.div variants={fadeInUp}>
-            <span className="font-mono text-xs tracking-widest uppercase text-serene-blue">
-              Vol. I — Origin
+            <span className="font-mono text-xs tracking-widest text-serene-blue uppercase">
+              Impact
             </span>
-            <div className="mt-3 h-[1px] bg-deep-navy opacity-10 w-full" />
+            <div className="mt-3 h-[1px] w-full bg-deep-navy opacity-10" />
           </motion.div>
 
-          {/* Paragraph 1 — Origin */}
           <motion.p
             variants={fadeInUp}
-            className="text-lg text-neutral-600 font-light leading-relaxed"
+            className="text-lg leading-relaxed font-light text-neutral-700"
           >
-            처음 코드를 접한 건 단순한 호기심에서였습니다. 화면 위의 텍스트
-            몇 줄이 살아 움직이는 순간, 논리와 창의성이 만나는 그 교차점에
-            매료되었습니다.
+            DOM 변경이 잦은 환경에서도 코드 수정 없이 92%의 데이터 수집
+            성공률을 유지했고, 이미지 전처리 개선으로 내부 테스트 기준 LLM
+            인식률을 20% 이상 높였습니다. 수치가 남는 문제를 정의하고,
+            유지보수 비용을 줄이는 방식으로 해결하는 일을 좋아합니다.
           </motion.p>
 
-          {/* Chapter divider */}
           <motion.div variants={fadeInUp} className="flex items-center gap-4">
-            <div className="h-[1px] bg-deep-navy opacity-10 flex-1" />
-            <span className="font-mono text-xs tracking-widest uppercase text-neutral-400">
-              Vol. II — Philosophy
+            <div className="h-[1px] flex-1 bg-deep-navy opacity-10" />
+            <span className="font-mono text-xs tracking-widest text-neutral-500 uppercase">
+              Stack
             </span>
-            <div className="h-[1px] bg-deep-navy opacity-10 flex-1" />
+            <div className="h-[1px] flex-1 bg-deep-navy opacity-10" />
           </motion.div>
 
-          {/* Paragraph 2 — Philosophy with inline badges */}
-          <motion.p
-            variants={fadeInUp}
-            className="text-lg text-neutral-600 font-light leading-relaxed"
-          >
-            저는 &lsquo;보이지 않는 곳의 견고함&rsquo;을 믿습니다. 아름다운 인터페이스
-            이면에는 반드시 탄탄한 아키텍처가 있어야 합니다.{" "}
-            <Badge className="mx-1 align-middle">Python</Badge>과{" "}
-            <Badge className="mx-1 align-middle">Django</Badge>로 백엔드의
-            뼈대를 세우고,{" "}
-            <Badge className="mx-1 align-middle">FastAPI</Badge>의 비동기
-            경계를 탐색하며,{" "}
-            <Badge className="mx-1 align-middle">LLM</Badge>을 활용하여
-            데이터에 맥락을 부여하는 것 — 그것이 제가 추구하는 개발입니다.
-          </motion.p>
+          <motion.div variants={fadeInUp} className="space-y-5">
+            <p className="text-lg leading-relaxed font-light text-neutral-700">
+              Python, Django, FastAPI 기반 백엔드와 GraphQL, Playwright,
+              Firebase, Gemini를 조합해 데이터 수집부터 인증, 응답 설계까지
+              다룹니다.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {stack.map((item) => (
+                <Badge key={item}>{item}</Badge>
+              ))}
+            </div>
+          </motion.div>
 
-          {/* Chapter divider */}
           <motion.div variants={fadeInUp} className="flex items-center gap-4">
-            <div className="h-[1px] bg-deep-navy opacity-10 flex-1" />
-            <span className="font-mono text-xs tracking-widest uppercase text-neutral-400">
-              Vol. III — Current
+            <div className="h-[1px] flex-1 bg-deep-navy opacity-10" />
+            <span className="font-mono text-xs tracking-widest text-neutral-500 uppercase">
+              Focus
             </span>
-            <div className="h-[1px] bg-deep-navy opacity-10 flex-1" />
+            <div className="h-[1px] flex-1 bg-deep-navy opacity-10" />
           </motion.div>
 
-          {/* Paragraph 3 — Current interests */}
           <motion.p
             variants={fadeInUp}
-            className="text-lg text-neutral-600 font-light leading-relaxed"
+            className="text-lg leading-relaxed font-light text-neutral-700"
           >
-            최근에는 시맨틱 크롤링과 멀티모달 AI 파이프라인에 깊이 빠져
-            있습니다. 단순히 작동하는 코드가 아닌, 맥락을 이해하고 적응하는
-            시스템을 설계하는 데 집중하고 있습니다.
+            최근에는 시맨틱 크롤링, 멀티모달 입력 처리, 운영 가능한 API
+            구조를 중심으로 작업하고 있습니다. 프롬프트 실험에만 머무르지
+            않고, 비동기 처리, 인증, 오류 제어, 배포까지 연결되는 서비스를
+            만드는 방향에 집중합니다.
           </motion.p>
 
-          {/* Closing ornament */}
           <motion.div
             variants={fadeInUp}
             className="flex items-center gap-3 pt-2 opacity-30"
           >
-            <div className="w-16 h-[1px] bg-deep-navy" />
-            <span className="font-mono text-xs text-neutral-400">◆</span>
-            <div className="w-4 h-[1px] bg-deep-navy" />
+            <div className="h-[1px] w-16 bg-deep-navy" />
+            <span className="font-mono text-xs text-neutral-500">◆</span>
+            <div className="h-[1px] w-4 bg-deep-navy" />
           </motion.div>
         </div>
       </motion.div>

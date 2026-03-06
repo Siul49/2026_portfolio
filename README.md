@@ -1,52 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 2026 Portfolio
 
-## Getting Started
+Kim Gyeongsu의 백엔드 중심 포트폴리오입니다. 데이터 수집 파이프라인, 멀티모달 AI 백엔드, 자동화 도구, 제품형 프로젝트를 채용 문서 관점에서 정리했습니다.
 
-First, run the development server:
+## Live
+
+- Portfolio: [https://siul49.github.io/2026_portfolio/](https://siul49.github.io/2026_portfolio/)
+
+## Highlights
+
+- `Pick Habju`: 2024 프로토타입 기준, 코드 수정 없이 92%의 데이터 수집 성공률을 유지한 시맨틱 크롤링 파이프라인
+- `BIMO`: 이미지 전처리 최적화로 내부 테스트 기준 LLM 인식률을 20% 이상 개선한 멀티모달 비행 컨시어지 백엔드
+- `PrimeRing`: 로컬 AI 요약과 하루 흐름 분석을 결합한 감정 다이어리 데스크톱 앱
+
+## Stack
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Framer Motion
+- GitHub Pages
+
+## Local Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Build
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+GitHub Pages 배포를 위해 `basePath`와 정적 asset 경로 처리가 포함되어 있습니다.
 
-## Learn More
+## Deploy
 
-To learn more about Next.js, take a look at the following resources:
+이 저장소는 GitHub Actions 기반 GitHub Pages 배포를 사용합니다.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. `main` 브랜치에 push 합니다.
+2. `.github/workflows/deploy-pages.yml`가 정적 빌드를 생성합니다.
+3. GitHub Pages 설정에서 Source를 `GitHub Actions`로 지정합니다.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-## Deploy to GitHub Pages
-
-This repository is configured for automatic GitHub Pages deployment via GitHub Actions.
-
-### 1) Push to `main`
-Once pushed, the workflow at `.github/workflows/deploy-pages.yml` builds and deploys the static site.
-
-### 2) Enable GitHub Pages in repository settings
-In your GitHub repo:
-- **Settings → Pages**
-- **Build and deployment**: set **Source** to **GitHub Actions**
-
-### 3) Open your site
-- If your repo is **`<username>.github.io`**: `https://<username>.github.io/`
-- Otherwise: `https://<username>.github.io/<repository>/`
+- `app/components/sections`: 홈 섹션 컴포넌트
+- `app/projects/*`: 프로젝트 상세 페이지와 데모
+- `app/lib`: 메타데이터, 프로젝트 데이터, 배포 경로 유틸리티
+- `public/demo`: 정적 HTML 데모 자산

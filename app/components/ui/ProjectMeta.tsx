@@ -12,7 +12,7 @@ interface ProjectMetaProps {
 
 export default function ProjectMeta({ items, className }: ProjectMetaProps) {
   return (
-    <div className={cn("flex flex-col gap-4 font-mono text-sm text-neutral-400", className)}>
+    <div className={cn("flex flex-col gap-4 font-mono text-sm text-neutral-500", className)}>
       {items.map((item) => (
         <div
           key={item.label}

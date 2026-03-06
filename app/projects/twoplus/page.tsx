@@ -6,8 +6,11 @@ import Button from "../../components/ui/Button";
 import ProjectMeta from "../../components/ui/ProjectMeta";
 import BrowserFrame from "../../components/ui/BrowserFrame";
 import ProjectNav from "../../components/ui/ProjectNav";
+import { withBasePath } from "../../lib/site";
 
 export default function TwoPlusDetail() {
+  const demoUrl = withBasePath("/demo/twoplus/index.html");
+
   return (
     <article className="min-h-screen pt-32 pb-20 px-8 max-w-5xl mx-auto font-sans text-deep-navy">
       {/* Header */}
@@ -23,6 +26,9 @@ export default function TwoPlusDetail() {
               사용자와 웹의 상호작용에 대한 실험: <br />
               움직임과 반응성(Responsiveness)을 탐구한 초기 포트폴리오
             </p>
+            <p className="mt-4 font-mono text-xs tracking-[0.22em] text-neutral-500 uppercase">
+              Archive / Frontend Study / TWOSEA-TECHNOLOGY
+            </p>
           </div>
           <div className="md:col-span-4">
             <ProjectMeta items={[
@@ -35,7 +41,7 @@ export default function TwoPlusDetail() {
 
         <div className="mt-8">
           <Button href="/projects/twoplus/demo" variant="secondary" size="md">
-            TRY LIVE DEMO
+            TRY LIVE DEMO ↗
           </Button>
         </div>
       </header>
@@ -74,9 +80,9 @@ export default function TwoPlusDetail() {
           Twosea Technology 웹사이트의 인터랙티브 데모를 직접 경험해보세요. 반응형 디자인과 매끄러운 네비게이션, 동적 컴포넌트들을 실시간으로 확인할 수 있습니다.
         </p>
 
-        <BrowserFrame title="demo/twoplus" openInNewTabUrl="/demo/twoplus/index.html">
+        <BrowserFrame title="demo/twoplus" openInNewTabUrl={demoUrl}>
           <iframe
-            src="/demo/twoplus/index.html"
+            src={demoUrl}
             className="w-full h-[600px] bg-white"
             title="TwoPlus Demo"
           />

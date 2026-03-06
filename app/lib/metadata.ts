@@ -1,18 +1,23 @@
 import type { Metadata } from "next";
+import { getSiteUrl, withBasePath } from "./site";
 
 const SITE_NAME = "Kim Gyeongsu";
-const SITE_TITLE = "Kim Gyeongsu | The Architect of Dreams";
+const SITE_TITLE = "Kim Gyeongsu | Backend Developer Portfolio";
 const DEFAULT_DESCRIPTION =
-  "Kim Gyeongsu's 2026 portfolio featuring backend, AI, automation, and desktop app case studies.";
+  "Kim Gyeongsu's backend-focused portfolio featuring data pipelines, multimodal AI backends, automation, and product case studies.";
 const DEFAULT_KEYWORDS = [
   "Kim Gyeongsu",
   "portfolio",
   "backend developer",
+  "data pipeline",
+  "multimodal AI",
   "AI",
   "automation",
-  "React",
   "Next.js",
 ];
+const OG_IMAGE_PATH = withBasePath("/images/projects/pick-habju.png");
+const siteUrl = getSiteUrl();
+const metadataBase = new URL(siteUrl).origin;
 
 type PageMetadataOptions = {
   title: string;
@@ -22,23 +27,38 @@ type PageMetadataOptions = {
 };
 
 export const rootMetadata: Metadata = {
+  metadataBase: new URL(metadataBase),
   title: {
     default: SITE_TITLE,
     template: `%s | ${SITE_NAME}`,
   },
   description: DEFAULT_DESCRIPTION,
   keywords: DEFAULT_KEYWORDS,
+  icons: {
+    icon: withBasePath("/favicon.ico"),
+    shortcut: withBasePath("/favicon.ico"),
+  },
   openGraph: {
     title: SITE_TITLE,
     description: DEFAULT_DESCRIPTION,
     type: "website",
     locale: "ko_KR",
     siteName: SITE_NAME,
+    url: siteUrl,
+    images: [
+      {
+        url: OG_IMAGE_PATH,
+        width: 1200,
+        height: 630,
+        alt: "Kim Gyeongsu backend developer portfolio preview",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_TITLE,
     description: DEFAULT_DESCRIPTION,
+    images: [OG_IMAGE_PATH],
   },
 };
 
@@ -70,11 +90,21 @@ export function createPageMetadata({
       type: "website",
       locale: "ko_KR",
       siteName: SITE_NAME,
+      url: siteUrl,
+      images: [
+        {
+          url: OG_IMAGE_PATH,
+          width: 1200,
+          height: 630,
+          alt: `${title} preview`,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description,
+      images: [OG_IMAGE_PATH],
     },
   };
 }

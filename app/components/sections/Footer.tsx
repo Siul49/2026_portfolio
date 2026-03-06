@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { fadeInUp, staggerContainer } from "../../lib/animations";
 import Container from "../ui/Container";
+import Button from "../ui/Button";
 
 export default function Footer() {
   return (
@@ -10,7 +11,7 @@ export default function Footer() {
       as="footer"
       size="wide"
       id="contact"
-      className="py-20 border-t border-grid-line"
+      className="border-t border-grid-line py-20"
     >
       <motion.div
         variants={staggerContainer}
@@ -18,37 +19,42 @@ export default function Footer() {
         whileInView="visible"
         viewport={{ once: true }}
       >
-        {/* ─── Top: Editorial Heading ──────────────────── */}
         <motion.div variants={fadeInUp} className="max-w-3xl">
-          <span className="font-mono text-xs tracking-[0.2em] text-neutral-400 uppercase mb-6 block">
-            {"// Contact"}
+          <span className="mb-6 block font-mono text-xs tracking-[0.2em] text-neutral-500 uppercase">
+            {"// Hiring & Collaboration"}
           </span>
-          <h2 className="text-4xl md:text-6xl font-serif font-bold text-deep-navy leading-[1.05] tracking-tight">
-            Let&rsquo;s Build Something{" "}
-            <span className="italic font-light text-serene-blue">
-              Together
-            </span>
+          <h2 className="text-4xl leading-[1.05] font-serif font-bold tracking-tight text-deep-navy md:text-6xl">
+            채용과 협업을 위한{" "}
+            <span className="font-light italic text-serene-blue">연락처</span>
           </h2>
-          <p className="text-lg text-neutral-500 font-light mt-4 leading-relaxed max-w-xl">
-            새로운 프로젝트나 협업에 관심이 있으시다면, 언제든 연락해 주세요.
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed font-light text-neutral-600">
+            백엔드, 데이터 파이프라인, 자동화 프로젝트에 관심이 있습니다.
+            채용 제안이나 협업 문의는 이메일 또는 GitHub를 통해 확인하고
+            있습니다.
           </p>
+          <div className="mt-8 flex flex-wrap gap-4">
+            <Button href="mailto:kksu149@gmail.com" size="md">
+              이메일 보내기
+            </Button>
+            <Button href="https://github.com/Siul49" external variant="outline" size="md">
+              GitHub 보기
+            </Button>
+          </div>
         </motion.div>
 
-        {/* ─── Middle: Contact Links ────────────────────── */}
         <motion.div
           variants={fadeInUp}
-          className="flex flex-col sm:flex-row gap-8 mt-14"
+          className="mt-14 flex flex-col gap-8 sm:flex-row"
         >
-          {/* GitHub */}
           <a
             href="https://github.com/Siul49"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 font-mono text-sm text-serene-blue hover:text-deep-navy transition-colors duration-300"
+            className="group inline-flex items-center gap-3 font-mono text-sm text-serene-blue transition-colors duration-300 hover:text-deep-navy"
           >
             <svg
               viewBox="0 0 24 24"
-              className="w-5 h-5 flex-shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5"
+              className="h-5 w-5 flex-shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5"
               aria-hidden="true"
             >
               <path
@@ -56,19 +62,18 @@ export default function Footer() {
                 fill="currentColor"
               />
             </svg>
-            <span className="border-b border-current border-opacity-30 pb-px group-hover:border-opacity-100 transition-all duration-300">
-              GitHub
+            <span className="border-b border-current border-opacity-30 pb-px transition-all duration-300 group-hover:border-opacity-100">
+              GitHub / Siul49
             </span>
           </a>
 
-          {/* Email */}
           <a
             href="mailto:kksu149@gmail.com"
-            className="group inline-flex items-center gap-3 font-mono text-sm text-serene-blue hover:text-deep-navy transition-colors duration-300"
+            className="group inline-flex items-center gap-3 font-mono text-sm text-serene-blue transition-colors duration-300 hover:text-deep-navy"
           >
             <svg
               viewBox="0 0 20 20"
-              className="w-5 h-5 flex-shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5"
+              className="h-5 w-5 flex-shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5"
               aria-hidden="true"
             >
               <path
@@ -80,21 +85,20 @@ export default function Footer() {
                 fill="currentColor"
               />
             </svg>
-            <span className="border-b border-current border-opacity-30 pb-px group-hover:border-opacity-100 transition-all duration-300">
-              kksu149@gmail.com
+            <span className="border-b border-current border-opacity-30 pb-px transition-all duration-300 group-hover:border-opacity-100">
+              Email / kksu149@gmail.com
             </span>
           </a>
         </motion.div>
 
-        {/* ─── Bottom: Separator + Copyright ───────────── */}
         <motion.div variants={fadeInUp}>
-          <div className="h-[1px] bg-deep-navy opacity-10 my-8" />
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-            <span className="font-mono text-xs text-neutral-400">
+          <div className="my-8 h-[1px] bg-deep-navy opacity-10" />
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <span className="font-mono text-xs text-neutral-500">
               &copy; 2026 Kim Gyeongsu
             </span>
-            <span className="font-mono text-xs text-neutral-400">
-              Designed &amp; Built with Next.js
+            <span className="font-mono text-xs text-neutral-500">
+              Backend Portfolio built with Next.js
             </span>
           </div>
         </motion.div>

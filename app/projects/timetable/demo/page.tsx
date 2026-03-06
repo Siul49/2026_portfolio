@@ -3,8 +3,11 @@
 import { motion } from "framer-motion";
 import { pageTransition } from "../../../lib/animations";
 import BackLink from "../../../components/ui/BackLink";
+import { withBasePath } from "../../../lib/site";
 
 export default function TimetableDemo() {
+    const demoUrl = withBasePath("/demo/timetable/test.html");
+
     return (
         <motion.div
             variants={pageTransition}
@@ -20,7 +23,7 @@ export default function TimetableDemo() {
 
             <div className="flex-1 w-full h-screen pt-0">
                 <iframe
-                    src="/demo/timetable/test.html"
+                    src={demoUrl}
                     className="w-full h-full border-none"
                     title="Timetable Demo"
                 />

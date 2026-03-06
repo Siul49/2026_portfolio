@@ -3,8 +3,11 @@ import SectionHeading from "../../components/ui/SectionHeading";
 import Button from "../../components/ui/Button";
 import BrowserFrame from "../../components/ui/BrowserFrame";
 import ProjectNav from "../../components/ui/ProjectNav";
+import { withBasePath } from "../../lib/site";
 
 export default function TimeTableDetail() {
+  const demoUrl = withBasePath("/demo/timetable/test.html");
+
   return (
     <article className="min-h-screen pt-32 pb-20 px-8 max-w-6xl mx-auto">
       {/* Header */}
@@ -18,6 +21,9 @@ export default function TimeTableDetail() {
             <p className="text-xl text-neutral-500 font-light max-w-2xl">
               프레임워크 없이 구현한 시간표 생성 로직: <br />
               Vanilla JS로 쌓아 올린 DOM 조작과 알고리즘의 기초
+            </p>
+            <p className="mt-4 font-mono text-xs tracking-[0.22em] text-neutral-500 uppercase">
+              Archive / Early Web Project
             </p>
             <div className="mt-6">
               <Button href="/projects/timetable/demo">
@@ -62,12 +68,19 @@ export default function TimeTableDetail() {
       <section className="mb-20 border-t border-grid-line pt-20">
         <div className="flex items-center justify-between mb-8">
           <h3 className="text-2xl font-serif font-bold text-deep-navy">Live Experience</h3>
-          <a href="/demo/timetable/test.html" target="_blank" className="text-sm font-mono text-serene-blue hover:underline">OPEN IN NEW TAB ↗</a>
+          <a
+            href={demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-mono text-serene-blue hover:underline"
+          >
+            OPEN IN NEW TAB ↗
+          </a>
         </div>
 
-        <BrowserFrame title="demo/timetable" openInNewTabUrl="/demo/timetable/test.html">
+        <BrowserFrame title="demo/timetable" openInNewTabUrl={demoUrl}>
           <iframe
-            src="/demo/timetable/test.html"
+            src={demoUrl}
             className="w-full h-[600px] bg-white"
             title="Time Table Demo"
           />

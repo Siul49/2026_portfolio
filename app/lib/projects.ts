@@ -1,3 +1,5 @@
+import { withBasePath } from "./site";
+
 export interface Project {
   id: string;
   slug: string;
@@ -15,37 +17,37 @@ export const projects: Project[] = [
     id: "01",
     slug: "pick-habju",
     title: "Pick Habju",
-    category: "Crawling & LLM",
+    category: "Backend / Crawling",
     description:
-      "LLM 기반 의미론적 크롤링으로 합주실 예약 경험 최적화. 기존 Rule-based 크롤러의 한계를 극복하고 데이터 정규화 성공률 92% 달성.",
-    tags: ["Python", "Django", "LLM", "Trafilatura"],
+      "2024 프로토타입 기준, 코드 수정 없이 92%의 데이터 수집 성공률을 유지한 시맨틱 크롤링 파이프라인.",
+    tags: ["Python", "LLM", "Semantic Crawling", "Prototype"],
     featured: true,
     link: "/projects/pick-habju",
-    thumbnail: "/images/projects/pick-habju.png",
+    thumbnail: withBasePath("/images/projects/pick-habju.png"),
   },
   {
     id: "02",
     slug: "bimo",
     title: "BIMO",
-    category: "AI Concierge",
+    category: "Backend / Multimodal AI",
     description:
-      "Gemini Vision을 활용하여 탑승권 정보를 자동 추출하고 맞춤형 비행 가이드를 제공하는 개인 비행 비서 서비스.",
-    tags: ["FastAPI", "Gemini", "Firebase"],
-    featured: false,
+      "이미지 전처리 최적화로 내부 테스트 기준 LLM 인식률을 20% 이상 개선한 멀티모달 비행 컨시어지 백엔드.",
+    tags: ["FastAPI", "Gemini", "Firebase", "JWT"],
+    featured: true,
     link: "/projects/bimo",
-    thumbnail: "/images/projects/bimo.png",
+    thumbnail: withBasePath("/images/projects/bimo.png"),
   },
   {
     id: "03",
     slug: "prime-ring",
     title: "PrimeRing",
-    category: "Desktop App",
+    category: "Desktop / AI",
     description:
-      "로컬 AI 감정 분석(WebLLM)을 지원하는 스마트 캘린더 & 다이어리 데스크톱 애플리케이션",
+      "로컬 AI 요약과 하루 흐름 분석을 결합한 감정 다이어리 데스크톱 앱. 도메인 경계를 다시 세우며 구조를 정리했습니다.",
     tags: ["React", "Electron", "Zustand", "WebLLM"],
     featured: false,
     link: "/projects/prime-ring",
-    thumbnail: "/images/projects/prime-ring.png",
+    thumbnail: withBasePath("/images/projects/prime-ring.png"),
   },
   {
     id: "04",
@@ -53,11 +55,11 @@ export const projects: Project[] = [
     title: "DDIP",
     category: "Community Commerce",
     description:
-      "이웃과 함께하는 식재료 공동구매 및 나눔 플랫폼. 상태 기반 UI 전환과 모듈화된 아키텍처 설계.",
+      "식재료 공동구매와 나눔 흐름을 상태 기반 UI로 정리한 커뮤니티 커머스 프로젝트.",
     tags: ["Next.js", "React", "Tailwind CSS"],
     featured: false,
     link: "/projects/ddip",
-    thumbnail: "/images/projects/ddip.png",
+    thumbnail: withBasePath("/images/projects/ddip.png"),
   },
   {
     id: "05",
@@ -65,35 +67,35 @@ export const projects: Project[] = [
     title: "LMS Downloader",
     category: "Automation",
     description:
-      "숭실대학교 Canvas LMS에서 강의 자료를 자동으로 다운로드하는 Python 스크립트",
+      "Canvas LMS 강의 자료 다운로드를 자동화해 반복 수작업을 줄인 Python 스크립트.",
     tags: ["Python", "Playwright"],
     featured: false,
     link: "/projects/lms",
-    thumbnail: "/images/projects/lms.png",
+    thumbnail: withBasePath("/images/projects/lms.png"),
   },
   {
     id: "06",
     slug: "timetable",
     title: "Time Table",
-    category: "Web",
+    category: "Archive / Web Basics",
     description:
-      "HTML/CSS/JS 기반의 시간표 생성 및 관리 웹 애플리케이션",
+      "순수 HTML, CSS, JavaScript로 시간표 충돌 처리와 직접 DOM 조작을 구현한 초기 웹 프로젝트.",
     tags: ["HTML", "CSS", "JavaScript"],
     featured: false,
     link: "/projects/timetable",
-    thumbnail: "/images/projects/timetable.png",
+    thumbnail: withBasePath("/images/projects/timetable.png"),
   },
   {
     id: "07",
     slug: "twoplus",
     title: "TwoPlus",
-    category: "Frontend",
+    category: "Archive / Frontend Study",
     description:
-      "초기 프론트엔드 실험과 인터랙션 연구를 담은 포트폴리오",
-    tags: ["React", "Interaction"],
+      "TWOSEA-TECHNOLOGY 인터랙션 실험을 통해 반응형 모션과 컴포넌트 구조를 탐구한 초기 프론트엔드 작업.",
+    tags: ["React", "Interaction", "Archive"],
     featured: false,
     link: "/projects/twoplus",
-    thumbnail: "/images/projects/twoplus.png",
+    thumbnail: withBasePath("/images/projects/twoplus.png"),
   },
 ];
 
