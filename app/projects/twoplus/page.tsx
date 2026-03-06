@@ -75,15 +75,28 @@ export default function TwoPlusDetail() {
 
       {/* Live Experience Section */}
       <section className="mt-20 pt-12 border-t border-grid-line">
-        <h2 className="text-3xl font-serif font-bold mb-8 text-deep-navy">Live Experience</h2>
-        <p className="text-neutral-500 mb-8 font-light leading-relaxed">
-          Twosea Technology 웹사이트의 인터랙티브 데모를 직접 경험해보세요. 반응형 디자인과 매끄러운 네비게이션, 동적 컴포넌트들을 실시간으로 확인할 수 있습니다.
-        </p>
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 className="text-3xl font-serif font-bold text-deep-navy">Live Experience</h2>
+            <p className="mt-3 text-neutral-500 font-light leading-relaxed">
+              Twosea Technology 웹사이트의 인터랙티브 데모를 직접 경험해보세요.
+              첫 화면이 눌려 보이지 않도록 히어로 여백과 뷰포트 높이도 함께 정리했습니다.
+            </p>
+          </div>
+          <a
+            href={demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-mono text-serene-blue transition-colors duration-300 hover:text-deep-navy hover:underline"
+          >
+            OPEN IN NEW TAB ↗
+          </a>
+        </div>
 
         <BrowserFrame title="demo/twoplus" openInNewTabUrl={demoUrl}>
           <iframe
             src={demoUrl}
-            className="w-full h-[600px] bg-white"
+            className="h-[68vh] min-h-[420px] w-full max-h-[760px] bg-white"
             title="TwoPlus Demo"
           />
         </BrowserFrame>

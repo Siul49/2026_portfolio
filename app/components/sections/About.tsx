@@ -145,11 +145,15 @@ export default function About() {
             </motion.p>
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              {mindsetCards.map((card) => (
+              {mindsetCards.map((card, index) => (
                 <motion.div
                   key={card.title}
                   variants={fadeInUp}
-                  className="rounded-sm border border-grid-line bg-neutral-50/70 p-6"
+                  className={`rounded-sm border p-6 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-neutral-300/80 hover:bg-white/92 hover:shadow-[0_12px_32px_rgba(16,33,58,0.05)] ${
+                    index % 2 === 0
+                      ? "border-grid-line bg-white/68 shadow-[0_10px_28px_rgba(16,33,58,0.025)]"
+                      : "border-grid-line bg-neutral-50/82 shadow-[0_10px_28px_rgba(16,33,58,0.02)]"
+                  }`}
                 >
                   <p className="font-mono text-xs tracking-widest text-serene-blue uppercase">
                     {card.title}

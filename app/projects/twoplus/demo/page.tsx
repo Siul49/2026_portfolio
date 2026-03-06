@@ -6,28 +6,38 @@ import BackLink from "../../../components/ui/BackLink";
 import { withBasePath } from "../../../lib/site";
 
 export default function TwoPlusDemo() {
-    const demoUrl = withBasePath("/demo/twoplus/index.html");
+  const demoUrl = withBasePath("/demo/twoplus/index.html");
 
-    return (
-        <motion.div
-            variants={pageTransition}
-            initial="hidden"
-            animate="visible"
-            className="min-h-screen bg-black relative flex flex-col"
+  return (
+    <motion.div
+      variants={pageTransition}
+      initial="hidden"
+      animate="visible"
+      className="min-h-screen bg-neutral-50"
+    >
+      <div className="sticky top-0 z-50 flex items-center justify-between gap-4 border-b border-neutral-200 bg-white/85 px-4 py-4 backdrop-blur-md sm:px-6">
+        <BackLink
+          href="/projects/twoplus"
+          label="EXIT DEMO"
+          className="mb-0 rounded-full border border-neutral-200 bg-white px-4 py-2 shadow-sm"
+        />
+        <a
+          href={demoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-mono text-xs text-serene-blue transition-colors duration-300 hover:text-deep-navy hover:underline"
         >
-            <BackLink
-                href="/projects/twoplus"
-                label="EXIT DEMO"
-                className="fixed top-8 left-8 z-50 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full shadow-sm border border-white/20 text-white"
-            />
+          OPEN STATIC PAGE ↗
+        </a>
+      </div>
 
-            <div className="flex-1 w-full h-screen pt-0">
-                <iframe
-                    src={demoUrl}
-                    className="w-full h-full border-none"
-                    title="TwoPlus Demo"
-                />
-            </div>
-        </motion.div>
-    );
+      <div className="w-full sm:px-4 sm:pb-4">
+        <iframe
+          src={demoUrl}
+          className="h-[calc(100svh-73px)] w-full border-none bg-white sm:h-[calc(100svh-105px)] sm:rounded-b-2xl sm:border sm:border-neutral-200"
+          title="TwoPlus Demo"
+        />
+      </div>
+    </motion.div>
+  );
 }
