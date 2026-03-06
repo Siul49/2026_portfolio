@@ -25,7 +25,9 @@ export default function Projects() {
             viewport={{ once: true }}
             className="text-5xl font-serif font-bold text-deep-navy"
           >
-            Selected <br /> Backend / AI Work
+            Projects That Taught Me
+            <br />
+            How Teams Move
           </motion.h2>
           <motion.p
             variants={fadeInUp}
@@ -34,8 +36,9 @@ export default function Projects() {
             viewport={{ once: true }}
             className="mt-4 max-w-2xl text-base leading-relaxed font-light text-neutral-600"
           >
-            상단은 대표 백엔드 프로젝트, 하단은 자동화와 초기 프론트엔드
-            아카이브를 함께 정리했습니다.
+            무엇을 만들었는지보다, 어떤 문제를 어떻게 정의했고 그 과정에서
+            무엇을 배웠는지 중심으로 정리했습니다. 백엔드 경험은 결과보다도
+            우선순위와 협업 방식을 배우는 계기가 되었습니다.
           </motion.p>
         </div>
         <span className="hidden font-mono text-xs tracking-widest text-neutral-500 md:block">

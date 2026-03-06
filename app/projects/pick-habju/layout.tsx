@@ -4,8 +4,14 @@ import { createPageMetadata } from "../../lib/metadata";
 export const metadata = createPageMetadata({
   title: "Pick Habju",
   description:
-    "A 2024 prototype case study for a semantic crawling pipeline that maintained 92% reservation-data collection success without code changes.",
-  keywords: ["Pick Habju", "semantic crawling", "data pipeline", "backend prototype"],
+    "A Pick Habju case study spanning a 2024 semantic crawling prototype and 2026 service-shaped backend assets, including FastAPI APIs, Supabase persistence, and testing.",
+  keywords: [
+    "Pick Habju",
+    "semantic crawling",
+    "FastAPI",
+    "Supabase",
+    "backend archive",
+  ],
 });
 
 export default function PickHabjuLayout({ children }: { children: ReactNode }) {

@@ -35,7 +35,7 @@ export default function Hero() {
             transition={{ ...smoothSlow, delay: 0.2 }}
             className="mb-6 font-mono text-[11px] tracking-[0.28em] text-neutral-500 uppercase"
           >
-            Backend Developer / Data Pipelines / Automation
+            PM Applicant / Product Thinking / Collaboration
           </motion.p>
 
           <motion.h1
@@ -45,11 +45,11 @@ export default function Hero() {
             transition={smoothSlow}
             className="max-w-5xl text-5xl leading-[0.95] font-serif font-bold tracking-tighter text-deep-navy md:text-8xl"
           >
-            코드 수정 없이 <span className="font-light italic text-serene-blue">92%</span>의
+            개발 경험을 바탕으로
             <br />
-            데이터 수집 성공률을 유지한
+            무엇을 왜 먼저 만들지 고민하는
             <br />
-            백엔드 개발자입니다.
+            PM 지원자입니다.
           </motion.h1>
 
           <motion.p
@@ -59,10 +59,12 @@ export default function Hero() {
             transition={{ ...smoothSlow, delay: 0.8 }}
             className="mt-8 max-w-2xl text-lg leading-relaxed font-light text-neutral-600 md:text-xl"
           >
-            DOM 변경에 흔들리지 않는 크롤링 파이프라인과 멀티모달 LLM 백엔드를
-            설계하며, 반복 작업을 줄이는 자동화 도구를 만듭니다.
+            픽합주에서 백엔드 팀 리드를 맡으며, 좋은 서비스를 만드는 데에는
+            구현만큼 문제 정의와 우선순위 설정, 팀이 같은 방향으로 움직이게
+            만드는 역할이 중요하다는 것을 배웠습니다. 이제 그 경험을 PM의
+            언어로 확장하고 싶습니다.
             <span className="mt-2 block font-mono text-sm text-serene-blue">
-              {"// Backend, AI, and automation systems that ship"}
+              {"// Learning to turn development experience into product thinking"}
             </span>
           </motion.p>
 
@@ -77,14 +79,14 @@ export default function Hero() {
               size="md"
               onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
             >
-              대표 프로젝트 보기
+              프로젝트로 보기
             </Button>
             <Button
               variant="outline"
               size="md"
-              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+              onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
             >
-              채용 / 협업 문의
+              왜 PM인가
             </Button>
             <Button href="https://github.com/Siul49" external variant="ghost" size="md">
               GitHub ↗

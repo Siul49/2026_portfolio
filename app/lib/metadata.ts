@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import { getSiteUrl, withBasePath } from "./site";
 
 const SITE_NAME = "Kim Gyeongsu";
-const SITE_TITLE = "Kim Gyeongsu | Backend Developer Portfolio";
+const SITE_TITLE = "Kim Gyeongsu | Product-minded PM Portfolio";
 const DEFAULT_DESCRIPTION =
-  "Kim Gyeongsu's backend-focused portfolio featuring data pipelines, multimodal AI backends, automation, and product case studies.";
+  "Kim Gyeongsu's portfolio focused on product thinking, collaboration, and lessons learned through backend, AI, automation, and service projects.";
 const DEFAULT_KEYWORDS = [
   "Kim Gyeongsu",
   "portfolio",
-  "backend developer",
-  "data pipeline",
-  "multimodal AI",
-  "AI",
-  "automation",
+  "PM portfolio",
+  "product thinking",
+  "collaboration",
+  "service design",
+  "backend foundation",
   "Next.js",
 ];
 const OG_IMAGE_PATH = withBasePath("/images/projects/pick-habju.png");
@@ -50,7 +50,7 @@ export const rootMetadata: Metadata = {
         url: OG_IMAGE_PATH,
         width: 1200,
         height: 630,
-        alt: "Kim Gyeongsu backend developer portfolio preview",
+        alt: "Kim Gyeongsu product-minded PM portfolio preview",
       },
     ],
   },

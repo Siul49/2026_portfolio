@@ -14,14 +14,14 @@ const summaryCards = [
       "탑승권 이미지와 항공편 문맥을 결합해 리뷰와 비행 팁을 생성하는 개인 비행 컨시어지 서비스입니다.",
   },
   {
-    title: "Backend Scope",
+    title: "Decision",
     description:
-      "FastAPI API, Firebase 기반 사용자 관리, 멀티모달 입력 처리, Gemini 응답 설계를 함께 맡았습니다.",
+      "정확도만큼 사용자 대기 시간과 흐름 설계가 중요하다고 보고, 멀티모달 처리와 응답 경험을 함께 다뤘습니다.",
   },
   {
-    title: "Result",
+    title: "Learning",
     description:
-      "이미지 전처리 개선으로 내부 테스트 기준 LLM 인식률을 20% 이상 높였습니다.",
+      "기술 성능이 좋아도 사용자가 느끼는 흐름이 불편하면 서비스 완성도가 떨어진다는 점을 배웠습니다.",
   },
 ];
 
@@ -59,11 +59,12 @@ export default function BimoDetail() {
           <div className="md:col-span-8">
             <SectionHeading className="mb-6">BIMO</SectionHeading>
             <p className="max-w-3xl text-xl leading-relaxed font-light text-neutral-600">
-              이미지 전처리 최적화로 내부 테스트 기준 LLM 인식률을 20% 이상
-              개선한 멀티모달 비행 컨시어지 백엔드.
+              탑승권 한 장으로 리뷰와 비행 팁을 만드는 경험을 설계하며,
+              정확도뿐 아니라 사용자의 대기 시간과 흐름 설계가 중요하다는 점을
+              배운 프로젝트입니다.
             </p>
             <p className="mt-4 font-mono text-xs tracking-[0.24em] text-serene-blue uppercase">
-              Auth, multimodal parsing, and response generation
+              User flow, latency, and multimodal backend design
             </p>
             <div className="mt-6">
               <Button href="/projects/bimo/demo">OPEN LIVE DEMO ↗</Button>
@@ -149,26 +150,27 @@ export default function BimoDetail() {
       <section className="mt-16 grid grid-cols-1 gap-12 border-t border-grid-line pt-16 md:grid-cols-12">
         <div className="md:col-span-4">
           <h3 className="mb-4 text-lg font-bold font-serif text-deep-navy">
-            Handling Latency
+            What I Learned
           </h3>
         </div>
         <div className="md:col-span-8">
           <p className="mb-6 leading-relaxed font-light text-neutral-600">
-            멀티모달 모델의 추론 시간은 평균 3~5초 수준이었기 때문에, 사용자가
-            이 시간을 단순 대기로 느끼지 않게 만드는 것이 중요했습니다.
+            BIMO에서는 모델 성능을 높이는 것만으로는 충분하지 않았습니다.
+            사용자가 지금 무엇을 기다리고 있는지 이해할 수 있어야 했고,
+            핵심 시나리오를 먼저 선명하게 정리하는 일이 중요했습니다.
           </p>
           <ul className="list-disc space-y-2 pl-5 font-light text-neutral-600">
             <li>
-              업로드 직후 썸네일과 진행 상태를 먼저 보여줘 체감 로딩 시간을
-              줄였습니다.
+              사용자는 모델 정확도보다도 "지금 어떤 단계가 진행 중인지"를 먼저
+              체감한다는 점을 배웠습니다.
             </li>
             <li>
-              FastAPI 비동기 처리로 이미지 분석과 응답 생성을 분리해 동시 요청
-              처리 효율을 높였습니다.
+              한 번에 많은 기능을 올리기보다, 핵심 입력과 응답 흐름을 먼저
+              선명하게 만드는 것이 서비스 완성도에 더 중요했습니다.
             </li>
             <li>
-              인증, 상태 저장, Gemini 응답을 한 흐름으로 연결해 서비스형 백엔드
-              경험을 만들었습니다.
+              기술 선택도 결국 사용자 경험과 일정 사이의 균형을 잡는 의사결정이라는
+              점에서 PM 관점과 맞닿아 있다는 것을 느꼈습니다.
             </li>
           </ul>
         </div>

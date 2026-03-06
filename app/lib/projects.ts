@@ -19,7 +19,7 @@ export const projects: Project[] = [
     title: "Pick Habju",
     category: "Backend / Crawling",
     description:
-      "2024 프로토타입 기준, 코드 수정 없이 92%의 데이터 수집 성공률을 유지한 시맨틱 크롤링 파이프라인.",
+      "외부 플랫폼 변화 앞에서 덜 깨지는 시스템과 팀 리드의 기준 정리가 얼마나 중요한지 배운 프로젝트.",
     tags: ["Python", "LLM", "Semantic Crawling", "Prototype"],
     featured: true,
     link: "/projects/pick-habju",
@@ -31,7 +31,7 @@ export const projects: Project[] = [
     title: "BIMO",
     category: "Backend / Multimodal AI",
     description:
-      "이미지 전처리 최적화로 내부 테스트 기준 LLM 인식률을 20% 이상 개선한 멀티모달 비행 컨시어지 백엔드.",
+      "정확도만큼 사용자 체감 흐름과 응답 대기 시간을 함께 설계해야 한다는 점을 배운 멀티모달 서비스.",
     tags: ["FastAPI", "Gemini", "Firebase", "JWT"],
     featured: true,
     link: "/projects/bimo",
@@ -43,7 +43,7 @@ export const projects: Project[] = [
     title: "PrimeRing",
     category: "Desktop / AI",
     description:
-      "로컬 AI 요약과 하루 흐름 분석을 결합한 감정 다이어리 데스크톱 앱. 도메인 경계를 다시 세우며 구조를 정리했습니다.",
+      "기능을 더하는 것보다 도메인 경계와 사용자 흐름을 다시 세우는 판단의 중요성을 배운 프로젝트.",
     tags: ["React", "Electron", "Zustand", "WebLLM"],
     featured: false,
     link: "/projects/prime-ring",
@@ -55,7 +55,7 @@ export const projects: Project[] = [
     title: "DDIP",
     category: "Community Commerce",
     description:
-      "식재료 공동구매와 나눔 흐름을 상태 기반 UI로 정리한 커뮤니티 커머스 프로젝트.",
+      "복잡한 공동구매 상태를 화면에서 얼마나 단순하게 보여주느냐가 사용자 이해를 좌우한다는 점을 탐구한 프로젝트.",
     tags: ["Next.js", "React", "Tailwind CSS"],
     featured: false,
     link: "/projects/ddip",
@@ -67,7 +67,7 @@ export const projects: Project[] = [
     title: "LMS Downloader",
     category: "Automation",
     description:
-      "Canvas LMS 강의 자료 다운로드를 자동화해 반복 수작업을 줄인 Python 스크립트.",
+      "반복 작업을 자동화하면 작은 도구도 실제 사용자 시간을 크게 줄일 수 있다는 점을 체감한 스크립트.",
     tags: ["Python", "Playwright"],
     featured: false,
     link: "/projects/lms",
@@ -79,7 +79,7 @@ export const projects: Project[] = [
     title: "Time Table",
     category: "Archive / Web Basics",
     description:
-      "순수 HTML, CSS, JavaScript로 시간표 충돌 처리와 직접 DOM 조작을 구현한 초기 웹 프로젝트.",
+      "직접 DOM을 다루며 화면 로직과 입력 흐름을 구조적으로 생각하기 시작한 초기 웹 프로젝트.",
     tags: ["HTML", "CSS", "JavaScript"],
     featured: false,
     link: "/projects/timetable",
@@ -91,7 +91,7 @@ export const projects: Project[] = [
     title: "TwoPlus",
     category: "Archive / Frontend Study",
     description:
-      "TWOSEA-TECHNOLOGY 인터랙션 실험을 통해 반응형 모션과 컴포넌트 구조를 탐구한 초기 프론트엔드 작업.",
+      "반응형과 인터랙션 실험을 통해 보여지는 경험도 서비스 인상에 큰 영향을 준다는 점을 배운 초기 작업.",
     tags: ["React", "Interaction", "Archive"],
     featured: false,
     link: "/projects/twoplus",

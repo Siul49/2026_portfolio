@@ -5,10 +5,15 @@ import SectionNav from "./components/SectionNav";
 import { createPageMetadata } from "./lib/metadata";
 
 export const metadata = createPageMetadata({
-  title: "Backend Developer Portfolio",
+  title: "Product-minded PM Portfolio",
   description:
-    "Main portfolio page for Kim Gyeongsu featuring backend, data pipeline, AI, automation, and product case studies.",
-  keywords: ["portfolio home", "backend portfolio", "developer portfolio"],
+    "Main portfolio page for Kim Gyeongsu featuring product thinking, collaboration, and lessons shaped by backend, AI, automation, and service projects.",
+  keywords: [
+    "portfolio home",
+    "PM portfolio",
+    "product thinking",
+    "collaboration",
+  ],
 });
 
 export default function Home() {
