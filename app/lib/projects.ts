@@ -11,6 +11,8 @@ export interface Project {
   link: string;
   thumbnail: string;
   previewAspectRatio: string;
+  previewFrameClassName?: string;
+  previewImageClassName?: string;
 }
 
 export const projects: Project[] = [
@@ -91,6 +93,8 @@ export const projects: Project[] = [
     link: "/projects/timetable",
     thumbnail: withBasePath("/images/projects/timetable.png"),
     previewAspectRatio: "1125 / 664",
+    previewFrameClassName: "bg-white p-3 md:p-4",
+    previewImageClassName: "object-contain object-center",
   },
   {
     id: "07",

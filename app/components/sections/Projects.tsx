@@ -91,17 +91,23 @@ export default function Projects() {
               <Link href={project.link || "#"}>
                 <motion.div {...hoverLift}>
                   <div
-                    className="relative mb-6 overflow-hidden border border-grid-line bg-neutral-50 transition-all duration-300 ease-out hover:shadow-lg"
+                    className={`relative mb-6 overflow-hidden border border-grid-line bg-neutral-50 transition-all duration-300 ease-out hover:shadow-lg ${
+                      project.previewFrameClassName ?? ""
+                    }`}
                     style={{ aspectRatio: project.previewAspectRatio }}
                   >
                     {project.thumbnail ? (
-                      <Image
-                        src={project.thumbnail}
-                        alt={`${project.title} screenshot`}
-                        fill
-                        className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
+                      <div className="relative h-full w-full overflow-hidden">
+                        <Image
+                          src={project.thumbnail}
+                          alt={`${project.title} screenshot`}
+                          fill
+                          className={`transition-transform duration-500 ease-out group-hover:scale-105 ${
+                            project.previewImageClassName ?? "object-cover object-top"
+                          }`}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      </div>
                     ) : (
                       <div className="absolute inset-0 bg-gradient-to-br from-white to-neutral-50 opacity-80" />
                     )}
