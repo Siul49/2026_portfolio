@@ -39,3 +39,5 @@ function loadStatesFromURL() {
     if (!isNaN(minParam)) currentMin = minParam;
     if (!isNaN(maxParam)) currentMax = maxParam;
 }
+
+window.saveStateToUrl = saveStateToUrl;

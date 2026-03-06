@@ -1,9 +1,9 @@
-import type { Variants, Transition } from "framer-motion";
+import type { MotionProps, Transition, Variants } from "framer-motion";
 
 // ─── Base Transitions ────────────────────────────────────────────
 // Slow, calm, deliberate — editorial pacing with gentle deceleration.
 
-const ease = [0.22, 0.03, 0.26, 1]; // soft deceleration curve
+const ease: [number, number, number, number] = [0.22, 0.03, 0.26, 1]; // soft deceleration curve
 
 export const smooth: Transition = {
   duration: 0.9,
@@ -137,12 +137,14 @@ export const staggerContainerSlow: Variants = {
 
 // ─── Hover / Interaction ────────────────────────────────────────
 
-export const hoverLift = {
+type HoverInteractionProps = Pick<MotionProps, "whileHover" | "whileTap">;
+
+export const hoverLift: HoverInteractionProps = {
   whileHover: { y: -3, scale: 1.015, transition: { duration: 0.4, ease } },
   whileTap: { scale: 0.985, transition: { duration: 0.2 } },
 };
 
-export const hoverScale = {
+export const hoverScale: HoverInteractionProps = {
   whileHover: { scale: 1.02, transition: { duration: 0.4, ease } },
   whileTap: { scale: 0.98, transition: { duration: 0.2 } },
 };

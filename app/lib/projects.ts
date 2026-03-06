@@ -41,8 +41,8 @@ export const projects: Project[] = [
     title: "PrimeRing",
     category: "Desktop App",
     description:
-      "AI 기반 감정 분석을 지원하는 스마트 캘린더 & 다이어리 데스크톱 애플리케이션",
-    tags: ["React", "Electron", "Gemini", "Firebase"],
+      "로컬 AI 감정 분석(WebLLM)을 지원하는 스마트 캘린더 & 다이어리 데스크톱 애플리케이션",
+    tags: ["React", "Electron", "Zustand", "WebLLM"],
     featured: false,
     link: "/projects/prime-ring",
     thumbnail: "/images/projects/prime-ring.png",

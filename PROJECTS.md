@@ -93,14 +93,14 @@
     *   **Front-end:** React 19, TypeScript, Vite, CSS Modules
     *   **Desktop:** Electron
     *   **State Management:** Zustand
-    *   **Database:** Firebase Firestore
-    *   **AI:** Google Gemini API
+    *   **Persistence:** Electron preload API + Local JSON (events/diaries)
+    *   **AI:** WebLLM (Llama 3 계열 로컬 추론)
     *   **UI Libraries:** Framer Motion, React Hot Toast
 *   **핵심 기능:**
     *   **스마트 캘린더:** 월간 뷰로 이벤트를 쉽게 관리하고 커스텀 카테고리 생성 및 색상 설정.
-    *   **AI 다이어리:** Gemini API를 활용한 자동 감정 분석.
+    *   **AI 다이어리:** 로컬 LLM을 활용한 자동 감정 분석.
     *   **테마 전환:** 라이트/다크 모드 지원.
-    *   **실시간 동기화:** Firebase Firestore 기반 데이터 저장.
+    *   **오프라인 우선 저장:** 로컬 파일 기반 데이터 저장.
     *   **크로스 플랫폼:** Electron 기반 Windows/macOS/Linux 지원.
 
 ---

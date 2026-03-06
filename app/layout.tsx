@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Inter, JetBrains_Mono, Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import Footer from "./components/sections/Footer";
+import { rootMetadata } from "./lib/metadata";
 
 // Fallback to Google Fonts if local font fails
 const inter = Inter({
@@ -29,10 +30,7 @@ const notoSansKr = Noto_Sans_KR({
   weight: ["100", "300", "400", "500", "700", "900"]
 });
 
-export const metadata: Metadata = {
-  title: "Kim Gyeongsu | The Architect of Dreams",
-  description: "Interactive Portfolio 2026 - Back-end Developer & Tech Enthusiast",
-};
+export const metadata: Metadata = rootMetadata;
 
 export default function RootLayout({
   children,

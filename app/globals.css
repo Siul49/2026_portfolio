@@ -25,6 +25,15 @@
   --color-neutral-700: #334E68;
   --color-neutral-800: #243B53;
   --color-neutral-900: #102A43;
+
+  /* DDIP brand accents */
+  --color-ddip-paper: #FFFCED;
+  --color-ddip-paper-border: #F3E5AB;
+  --color-ddip-gold: #B8860B;
+  --color-ddip-sun: #FFD700;
+  --color-ddip-leaf: #9ACD32;
+  --color-ddip-cream: #FFFACD;
+  --color-ddip-cream-border: #F0E68C;
 }
 
 :root {

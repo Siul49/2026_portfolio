@@ -137,7 +137,7 @@ export default function PickHabjuDemo() {
       variants={pageTransition}
       initial="hidden"
       animate="visible"
-      className="min-h-screen bg-[#F0F4F8] text-deep-navy"
+      className="min-h-screen bg-cool-white text-deep-navy"
     >
       {/* Exit Button */}
       <BackLink
@@ -164,7 +164,7 @@ export default function PickHabjuDemo() {
                 className="bg-white/60 backdrop-blur-xl rounded-t-3xl rounded-b-xl shadow-2xl p-12 border border-white/40 ring-1 ring-deep-navy/5"
               >
                 <div className="text-center mb-10">
-                  <span className="font-mono text-xs tracking-widest text-serene-blue uppercase mb-2 block">// RESERVATION</span>
+                  <span className="font-mono text-xs tracking-widest text-serene-blue uppercase mb-2 block">{"// RESERVATION"}</span>
                   <h1 className="text-5xl font-serif font-bold text-deep-navy mb-2">Pick Habju</h1>
                   <p className="text-neutral-500 font-light">합주실 예약의 새로운 기준</p>
                 </div>
@@ -253,7 +253,7 @@ export default function PickHabjuDemo() {
                     >
                       <div className="bg-white/60 backdrop-blur-xl rounded-2xl border border-deep-navy/5 p-6 shadow-lg">
                         <div className="text-center mb-6">
-                          <span className="text-[10px] font-mono text-serene-blue/60 tracking-widest uppercase">/// Semantic Extraction Pipeline</span>
+                          <span className="text-[10px] font-mono text-serene-blue/60 tracking-widest uppercase">{"/// Semantic Extraction Pipeline"}</span>
                           <h4 className="text-lg font-serif font-bold text-deep-navy mt-1">LLM 기반 적응형 크롤링</h4>
                           <p className="text-[11px] text-neutral-400 mt-1">CSS 선택자가 아닌 의미론적 이해로 데이터를 추출합니다</p>
                         </div>

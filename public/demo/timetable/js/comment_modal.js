@@ -48,3 +48,8 @@ function updateModalText() {
         closeModal();
     }
 }
+
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.nextStep = nextStep;
+window.lastStep = lastStep;

@@ -1,69 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { fadeInUp, smoothSpring, smooth, staggerContainer, hoverLift, pageTransition, smoothBounce } from "../../../lib/animations";
 import { cn } from "../../../lib/utils";
 import BackLink from "../../../components/ui/BackLink";
 import Button from "../../../components/ui/Button";
-
-interface FlightData {
-  airline: string;
-  flightNumber: string;
-  departureCode: string;
-  departureCity: string;
-  arrivalCode: string;
-  arrivalCity: string;
-  date: string;
-  departureTime: string;
-  arrivalTime: string;
-  duration: string;
-  timezoneOffset: number;
-}
-
-const sampleFlights: FlightData[] = [
-  {
-    airline: "대한항공",
-    flightNumber: "KE713",
-    departureCode: "ICN",
-    departureCity: "인천",
-    arrivalCode: "NRT",
-    arrivalCity: "나리타",
-    date: "2025.12.15",
-    departureTime: "09:30",
-    arrivalTime: "11:50",
-    duration: "2h 20m",
-    timezoneOffset: 0,
-  },
-  {
-    airline: "아시아나",
-    flightNumber: "OZ212",
-    departureCode: "ICN",
-    departureCity: "인천",
-    arrivalCode: "SFO",
-    arrivalCity: "샌프란시스코",
-    date: "2025.12.20",
-    departureTime: "13:00",
-    arrivalTime: "08:45",
-    duration: "11h 45m",
-    timezoneOffset: -17,
-  },
-  {
-    airline: "진에어",
-    flightNumber: "LJ201",
-    departureCode: "GMP",
-    departureCity: "김포",
-    arrivalCode: "CTS",
-    arrivalCity: "삿포로",
-    date: "2026.01.05",
-    departureTime: "07:45",
-    arrivalTime: "10:50",
-    duration: "2h 5m",
-    timezoneOffset: 0,
-  },
-];
-
-const steps = ["탑승권 선택", "AI 분석", "비행 카드", "맞춤 가이드"];
+import { FlightData, sampleFlights, steps } from "./data";
 
 export default function BimoDemo() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -72,65 +15,79 @@ export default function BimoDemo() {
   const [analysisComplete, setAnalysisComplete] = useState(false);
   const [scanPhase, setScanPhase] = useState(0); // 0: scan, 1: extract, 2: json, 3: complete
   const [ocrBoxes, setOcrBoxes] = useState<number[]>([]);
+  const timeoutIdsRef = useRef<Array<ReturnType<typeof setTimeout>>>([]);
 
-  useEffect(() => {
-    if (currentStep === 1 && selectedFlight) {
-      // Reset analysis state
-      setAnalyzedFields([]);
-      setAnalysisComplete(false);
-      setScanPhase(0);
-      setOcrBoxes([]);
+  const clearScheduledTasks = useCallback(() => {
+    timeoutIdsRef.current.forEach((id) => clearTimeout(id));
+    timeoutIdsRef.current = [];
+  }, []);
 
-      // Phase 0: Scan animation (0-2s)
-      // OCR boxes appear sequentially
-      setTimeout(() => setOcrBoxes([1]), 400);
-      setTimeout(() => setOcrBoxes([1, 2]), 700);
-      setTimeout(() => setOcrBoxes([1, 2, 3]), 1000);
-      setTimeout(() => setOcrBoxes([1, 2, 3, 4]), 1300);
-      setTimeout(() => setOcrBoxes([1, 2, 3, 4, 5]), 1600);
+  const scheduleTask = useCallback((callback: () => void, delay: number) => {
+    const id = setTimeout(callback, delay);
+    timeoutIdsRef.current.push(id);
+  }, []);
 
-      // Phase 1: Extraction (2s)
-      setTimeout(() => setScanPhase(1), 2000);
-
-      // Phase 2: JSON structuring (3.5s)
-      const fields = [
-        `"airline": "${selectedFlight.airline}"`,
-        `"flight_number": "${selectedFlight.flightNumber}"`,
-        `"departure": { "code": "${selectedFlight.departureCode}", "city": "${selectedFlight.departureCity}" }`,
-        `"arrival": { "code": "${selectedFlight.arrivalCode}", "city": "${selectedFlight.arrivalCity}" }`,
-        `"date": "${selectedFlight.date}"`,
-        `"departure_time": "${selectedFlight.departureTime}"`,
-        `"duration": "${selectedFlight.duration}"`,
-      ];
-
-      setTimeout(() => {
-        setScanPhase(2);
-        fields.forEach((field, index) => {
-          setTimeout(() => {
-            setAnalyzedFields((prev) => [...prev, field]);
-            if (index === fields.length - 1) {
-              setTimeout(() => {
-                setScanPhase(3);
-                setAnalysisComplete(true);
-                setTimeout(() => setCurrentStep(2), 1200);
-              }, 600);
-            }
-          }, index * 350);
-        });
-      }, 3500);
-    }
-  }, [currentStep, selectedFlight]);
-
-  const handleFlightSelect = (flight: FlightData) => {
+  const startAnalysis = useCallback((flight: FlightData) => {
+    clearScheduledTasks();
     setSelectedFlight(flight);
     setCurrentStep(1);
+    setAnalyzedFields([]);
+    setAnalysisComplete(false);
+    setScanPhase(0);
+    setOcrBoxes([]);
+
+    // Phase 0: Scan animation (0-2s)
+    scheduleTask(() => setOcrBoxes([1]), 400);
+    scheduleTask(() => setOcrBoxes([1, 2]), 700);
+    scheduleTask(() => setOcrBoxes([1, 2, 3]), 1000);
+    scheduleTask(() => setOcrBoxes([1, 2, 3, 4]), 1300);
+    scheduleTask(() => setOcrBoxes([1, 2, 3, 4, 5]), 1600);
+
+    // Phase 1: Extraction (2s)
+    scheduleTask(() => setScanPhase(1), 2000);
+
+    // Phase 2: JSON structuring (3.5s)
+    const fields = [
+      `"airline": "${flight.airline}"`,
+      `"flight_number": "${flight.flightNumber}"`,
+      `"departure": { "code": "${flight.departureCode}", "city": "${flight.departureCity}" }`,
+      `"arrival": { "code": "${flight.arrivalCode}", "city": "${flight.arrivalCity}" }`,
+      `"date": "${flight.date}"`,
+      `"departure_time": "${flight.departureTime}"`,
+      `"duration": "${flight.duration}"`,
+    ];
+
+    scheduleTask(() => {
+      setScanPhase(2);
+      fields.forEach((field, index) => {
+        scheduleTask(() => {
+          setAnalyzedFields((prev) => [...prev, field]);
+          if (index === fields.length - 1) {
+            scheduleTask(() => {
+              setScanPhase(3);
+              setAnalysisComplete(true);
+              scheduleTask(() => setCurrentStep(2), 1200);
+            }, 600);
+          }
+        }, index * 350);
+      });
+    }, 3500);
+  }, [clearScheduledTasks, scheduleTask]);
+
+  useEffect(() => clearScheduledTasks, [clearScheduledTasks]);
+
+  const handleFlightSelect = (flight: FlightData) => {
+    startAnalysis(flight);
   };
 
   const resetDemo = () => {
+    clearScheduledTasks();
     setCurrentStep(0);
     setSelectedFlight(null);
     setAnalyzedFields([]);
     setAnalysisComplete(false);
+    setScanPhase(0);
+    setOcrBoxes([]);
   };
 
   return (
@@ -138,7 +95,7 @@ export default function BimoDemo() {
       variants={pageTransition}
       initial="hidden"
       animate="visible"
-      className="min-h-screen bg-[#F0F4F8] text-deep-navy"
+      className="min-h-screen bg-cool-white text-deep-navy"
     >
       {/* Exit button */}
       <BackLink

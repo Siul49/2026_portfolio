@@ -49,7 +49,7 @@ export default function Hero() {
             감각적인 사용자 경험 이면의 견고한 로직을 설계합니다.
             <br />
             <span className="text-sm text-serene-blue mt-2 block font-mono">
-              // Back-end Developer & Tech Enthusiast
+              {"// Back-end Developer & Tech Enthusiast"}
             </span>
           </motion.p>
         </div>

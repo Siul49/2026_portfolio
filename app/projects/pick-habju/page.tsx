@@ -19,8 +19,9 @@ export default function PickHabjuDetail() {
             <SectionHeading className="mb-6">
               Pick Habju
             </SectionHeading>
-            <p className="text-xl text-neutral-500 font-light max-w-2xl">
-              LLM 기반 의미론적 추출(Semantic Extraction)을 도입하여, 기존 크롤러의 '취약성(Brittleness)'을 해결하다.
+            <p className="text-xl text-neutral-500 font-light max-w-2xl leading-relaxed">
+              기존 크롤러의 &lsquo;부서짐(Brittleness)&rsquo;을 해결하다: <br />
+              LLM 기반의 의미론적 데이터 추출(Semantic Extraction) 파이프라인
             </p>
             <div className="mt-6">
               <Button href="/projects/pick-habju/demo">
@@ -41,35 +42,44 @@ export default function PickHabjuDetail() {
       {/* Content - Technical Deep Dive */}
       <section className="grid grid-cols-1 md:grid-cols-12 gap-12">
         <div className="md:col-span-4">
-          <h3 className="text-lg font-bold mb-4 font-serif text-deep-navy">The Challenge</h3>
-          <p className="text-sm text-neutral-500 leading-relaxed">
-            네이버 지도의 잦은 UI 변경으로 인해, 기존의 규칙 기반(Rule-based) 크롤러는 지속적으로 파손되었습니다. 단순히 구조(Structure)가 아닌 콘텐츠의 맥락(Context)을 이해하는 견고한 시스템이 필요했습니다.
+          <h3 className="text-lg font-bold mb-4 font-serif text-deep-navy">Why LLM for Crawling?</h3>
+          <p className="text-sm text-neutral-500 leading-relaxed text-justify">
+            네이버 지도와 같은 대형 플랫폼은 수시로 DOM 구조를 변경합니다. `div.class_name`에 의존하는 기존 크롤러는 매번 수정이 필요했습니다. 우리는 HTML 구조가 아닌 <strong>콘텐츠의 의미</strong>를 읽는 시스템이 필요했습니다.
           </p>
         </div>
         <div className="md:col-span-8">
-          <div className="bg-neutral-50 p-8 rounded-lg border border-grid-line mb-8">
-            <h4 className="font-mono text-xs text-serene-blue mb-4">/// SOLUTION ARCHITECTURE</h4>
-            <div className="space-y-4">
+          <div className="bg-neutral-50 p-8 rounded-lg border border-grid-line mb-12">
+            <h4 className="font-mono text-xs text-serene-blue mb-6 uppercase tracking-widest">{"/// Robust Extraction Architecture"}</h4>
+            <div className="space-y-6">
               <div className="flex items-center gap-4">
                 <StepIndicator step={1} variant="navy" />
-                <p className="font-light"><strong>Trafilatura</strong>로 원본 HTML에서 불필요한 노이즈 제거.</p>
+                <div>
+                  <strong className="text-sm text-deep-navy">Raw HTML Cleaning</strong>
+                  <p className="font-light text-xs text-neutral-400 mt-1">Trafilatura를 사용하여 광고, 내비게이션 등 불필요한 노이즈 태그를 제거하고 순수 본문 텍스트만 추출합니다.</p>
+                </div>
               </div>
-              <div className="h-8 w-[1px] bg-neutral-200 ml-4"></div>
+              <div className="h-6 w-[1px] bg-neutral-200 ml-4 my-2"></div>
               <div className="flex items-center gap-4">
                 <StepIndicator step={2} variant="blue" />
-                <p className="font-light"><strong>Ollama (Llama 3)</strong>에 주입하여 적응형 프롬프트로 정보 추출.</p>
+                <div>
+                  <strong className="text-sm text-deep-navy">Semantic Parsing (Llama 3)</strong>
+                  <p className="font-light text-xs text-neutral-400 mt-1">Local LLM에 적응형 프롬프트를 주입하여, 비정형 텍스트에서 &lsquo;가격&rsquo;, &lsquo;위치&rsquo;, &lsquo;옵션&rsquo; 정보를 JSON으로 변환합니다.</p>
+                </div>
               </div>
-              <div className="h-8 w-[1px] bg-neutral-200 ml-4"></div>
+              <div className="h-6 w-[1px] bg-neutral-200 ml-4 my-2"></div>
               <div className="flex items-center gap-4">
                 <StepIndicator step={3} variant="muted" />
-                <p className="font-light"><strong>BIMO</strong> 로직을 통해 스키마 검증 후 DB 저장.</p>
+                <div>
+                  <strong className="text-sm text-deep-navy">Schema Validation</strong>
+                  <p className="font-light text-xs text-neutral-400 mt-1">Pydantic을 활용해 추출된 데이터의 타입을 엄격하게 검증하고, 오류 발생 시 재시도(Retry) 로직을 수행합니다.</p>
+                </div>
               </div>
             </div>
           </div>
 
-          <h3 className="text-2xl font-serif font-bold mb-6 mt-12 text-deep-navy">Key Engineering Decisions</h3>
+          <h3 className="text-2xl font-serif font-bold mb-6 text-deep-navy">Impact: Zero Maintenance</h3>
           <p className="text-neutral-500 mb-6 font-light leading-relaxed">
-            깨지기 쉬운 CSS 선택자에 의존하는 대신, <strong>시맨틱 추출 파이프라인(Semantic Extraction Pipeline)</strong>을 구축했습니다. HTML을 비정형 텍스트로 취급하고 LLM의 독해 능력을 활용함으로써, 원본 사이트의 레이아웃이 대폭 변경되어도 <strong>92%의 데이터 정규화 성공률</strong>을 달성했습니다.
+            시맨틱 추출 파이프라인 도입 이후, 타겟 사이트의 대규모 UI 개편이 두 차례 있었음에도 불구하고 <strong>코드 수정 없이 92%의 데이터 수집 성공률</strong>을 유지했습니다. 이는 유지보수 비용을 획기적으로 절감하고, 개발자가 비즈니스 로직에만 집중할 수 있게 만들었습니다.
           </p>
         </div>
       </section>

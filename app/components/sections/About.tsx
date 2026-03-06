@@ -32,7 +32,7 @@ export default function About() {
           {/* Section label */}
           <div>
             <span className="font-mono text-xs tracking-widest uppercase text-neutral-400">
-              // ABOUT THE ARCHITECT
+              {"// ABOUT THE ARCHITECT"}
             </span>
             <div className="mt-3 h-[1px] bg-deep-navy opacity-10 w-full" />
           </div>
@@ -42,9 +42,9 @@ export default function About() {
             {/* Vertical accent line */}
             <div className="absolute left-0 top-0 w-[1px] h-full bg-deep-navy opacity-20" />
             <blockquote className="font-serif italic text-2xl md:text-3xl leading-snug text-deep-navy">
-              "코드는 논리의 언어이자,
+              &ldquo;코드는 논리의 언어이자,
               <br />
-              꿈의 설계도이다."
+              꿈의 설계도이다.&rdquo;
             </blockquote>
           </div>
 
@@ -90,7 +90,7 @@ export default function About() {
             variants={fadeInUp}
             className="text-lg text-neutral-600 font-light leading-relaxed"
           >
-            저는 '보이지 않는 곳의 견고함'을 믿습니다. 아름다운 인터페이스
+            저는 &lsquo;보이지 않는 곳의 견고함&rsquo;을 믿습니다. 아름다운 인터페이스
             이면에는 반드시 탄탄한 아키텍처가 있어야 합니다.{" "}
             <Badge className="mx-1 align-middle">Python</Badge>과{" "}
             <Badge className="mx-1 align-middle">Django</Badge>로 백엔드의

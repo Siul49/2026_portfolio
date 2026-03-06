@@ -1,199 +1,66 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { fadeInUp, smoothSpring, smooth, staggerContainer, smoothBounce, pageTransition } from "../../../lib/animations";
 import { cn } from "../../../lib/utils";
 import BackLink from "../../../components/ui/BackLink";
 import Button from "../../../components/ui/Button";
-
-interface DiaryEntry {
-    id: string;
-    date: string;
-    title: string;
-    content: string;
-    emotion: string;
-    emotionEmoji: string;
-    emotionScore: number;
-    keywords: string[];
-    insight: string;
-}
-
-interface CalendarEvent {
-    id: string;
-    date: string;
-    title: string;
-    category: string;
-    color: string;
-}
-
-const steps = ["캘린더", "다이어리 작성", "AI 감정 분석", "분석 완료"];
-
-const sampleEvents: CalendarEvent[] = [
-    { id: "1", date: "2025-12-15", title: "팀 미팅", category: "업무", color: "#486581" },
-    { id: "2", date: "2025-12-18", title: "운동", category: "건강", color: "#829AB1" },
-    { id: "3", date: "2025-12-20", title: "독서", category: "취미", color: "#102A43" },
-    { id: "4", date: "2025-12-22", title: "카페 공부", category: "취미", color: "#102A43" },
-    { id: "5", date: "2025-12-25", title: "크리스마스", category: "가족", color: "#BCCCDC" },
-];
-
-const categories = [
-    { name: "업무", color: "#486581" },
-    { name: "건강", color: "#829AB1" },
-    { name: "취미", color: "#102A43" },
-    { name: "가족", color: "#BCCCDC" },
-];
-
-// ── Keyword-based Semantic Analysis ──────────────────────────────
-// 실제 Gemini API 대신, 키워드 매칭으로 감정을 동적 분석합니다.
-// 이렇게 하면 데모에서 입력 내용에 따라 다른 결과가 나와서 훨씬 현실적입니다.
-
-const positiveKeywords = ["좋았", "행복", "즐거", "신나", "기뻤", "감사", "뿌듯", "성취", "재밌", "사랑", "최고", "웃었", "설레", "희망", "자신감", "성공", "칭찬", "맛있", "편안", "따뜻", "기분 좋", "잘 했", "잘했", "완성", "보람"];
-const negativeKeywords = ["힘들", "지쳤", "피곤", "슬펐", "우울", "짜증", "화났", "스트레스", "불안", "걱정", "실망", "후회", "외로", "아팠", "두려", "무기력", "답답", "속상", "눈물", "힘든", "못 했", "못했", "실패", "싫", "최악"];
-const neutralKeywords = ["평범", "보통", "그냥", "무난", "일상", "별일", "특별히"];
-
-interface AnalysisResult {
-    emotion: string;
-    emotionEmoji: string;
-    emotionScore: number;
-    keywords: string[];
-    insight: string;
-}
-
-function analyzeSentiment(text: string): AnalysisResult {
-    if (!text.trim()) {
-        return { emotion: "중립", emotionEmoji: "😐", emotionScore: 50, keywords: [], insight: "" };
-    }
-
-    let posScore = 0;
-    let negScore = 0;
-    const foundKeywords: string[] = [];
-
-    positiveKeywords.forEach(keyword => {
-        if (text.includes(keyword)) {
-            posScore += 10;
-            const matchWord = keyword.length > 2 ? keyword : keyword + "다";
-            if (!foundKeywords.includes(matchWord) && foundKeywords.length < 5) {
-                foundKeywords.push(matchWord);
-            }
-        }
-    });
-
-    negativeKeywords.forEach(keyword => {
-        if (text.includes(keyword)) {
-            negScore += 10;
-            const matchWord = keyword.length > 2 ? keyword : keyword + "다";
-            if (!foundKeywords.includes(matchWord) && foundKeywords.length < 5) {
-                foundKeywords.push(matchWord);
-            }
-        }
-    });
-
-    neutralKeywords.forEach(keyword => {
-        if (text.includes(keyword)) {
-            const matchWord = keyword.length > 2 ? keyword : keyword + "다";
-            if (!foundKeywords.includes(matchWord) && foundKeywords.length < 5) {
-                foundKeywords.push(matchWord);
-            }
-        }
-    });
-
-    // 텍스트 길이에 따른 보정 (길수록 더 풍부한 감정 표현으로 봄)
-    const lengthBonus = Math.min(text.length / 50, 3);
-
-    // 총 감정 점수 계산
-    const netScore = posScore - negScore;
-    let emotionScore: number;
-    let emotion: string;
-    let emotionEmoji: string;
-    let insight: string;
-
-    if (netScore > 15) {
-        emotionScore = Math.min(95, 75 + netScore + lengthBonus);
-        emotion = "매우 긍정적";
-        emotionEmoji = "😄";
-        insight = "오늘 하루가 정말 빛나는 날이었군요! 이런 긍정적인 에너지를 기록해두면, 힘든 날에 큰 힘이 됩니다. 주변 사람들에게도 좋은 영향을 주고 있을 거예요.";
-    } else if (netScore > 5) {
-        emotionScore = Math.min(89, 65 + netScore + lengthBonus);
-        emotion = "긍정적";
-        emotionEmoji = "😊";
-        insight = "전반적으로 좋은 하루를 보내셨네요. 작은 즐거움들이 모여 큰 행복이 됩니다. 오늘의 좋았던 순간을 내일도 이어가보세요!";
-    } else if (netScore > -5) {
-        emotionScore = Math.round(45 + netScore + lengthBonus);
-        emotion = "평온";
-        emotionEmoji = "😌";
-        insight = "차분하고 안정적인 하루였네요. 때로는 평범한 하루가 가장 소중합니다. 내일은 작은 새로운 시도를 해보는 건 어떨까요?";
-    } else if (netScore > -15) {
-        emotionScore = Math.max(20, 40 + netScore - lengthBonus);
-        emotion = "다소 부정적";
-        emotionEmoji = "😔";
-        insight = "조금 힘든 하루였나 봐요. 괜찮습니다, 이렇게 감정을 기록하는 것 자체가 큰 용기입니다. 충분히 쉬고, 내일의 자신에게 응원을 보내보세요.";
-    } else {
-        emotionScore = Math.max(10, 25 + netScore - lengthBonus);
-        emotion = "부정적";
-        emotionEmoji = "😢";
-        insight = "많이 지치셨군요. 감정을 솔직하게 표현하는 것은 매우 건강한 방법입니다. 좋아하는 음악을 듣거나, 짧은 산책을 추천합니다. 당신은 충분히 잘하고 있어요.";
-    }
-
-    // 키워드가 없으면 텍스트에서 직접 추출 시도
-    if (foundKeywords.length === 0) {
-        const words = text.replace(/[.,!?~]/g, ' ').split(/\s+/).filter(w => w.length >= 2 && w.length <= 6);
-        const uniqueWords = [...new Set(words)];
-        foundKeywords.push(...uniqueWords.slice(0, 3));
-    }
-
-    return { emotion, emotionEmoji, emotionScore, keywords: foundKeywords, insight };
-}
-
-// 프리셋 입력 데이터 - 사용자가 빠르게 테스트 가능하게
-const presetTexts = [
-    { label: "😊 좋은 하루", text: "오늘 팀 프로젝트에서 칭찬을 받았다. 내가 열심히 준비한 발표가 좋은 평가를 받아서 정말 뿌듯했다. 저녁에는 친구들과 맛있는 저녁을 먹으며 즐거운 시간을 보냈다." },
-    { label: "😔 힘든 하루", text: "오늘은 하루종일 피곤하고 지쳤다. 과제 마감에 쫓기면서 스트레스를 많이 받았고, 결과물도 실망스러웠다. 집에 와서도 우울한 기분이 가시지 않았다." },
-    { label: "😌 평범한 하루", text: "오늘은 평범한 하루였다. 수업을 듣고 도서관에서 공부를 하다가 저녁에 집에 왔다. 특별한 일은 없었지만 무난하게 보냈다." },
-];
+import { DiaryEntry, steps, sampleEvents, categories, presetTexts } from "./data";
+import { analyzeSentiment, createDiaryEntry } from "./utils";
 
 export default function PrimeRingDemo() {
     const [currentStep, setCurrentStep] = useState(0);
     const [selectedDate, setSelectedDate] = useState("2025-12-20");
     const [diaryContent, setDiaryContent] = useState("");
-    const [analyzing, setAnalyzing] = useState(false);
     const [analysisResult, setAnalysisResult] = useState<DiaryEntry | null>(null);
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [analyzingPhase, setAnalyzingPhase] = useState(0);
+    const timeoutIdsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+    const clearScheduledTasks = () => {
+        timeoutIdsRef.current.forEach(clearTimeout);
+        timeoutIdsRef.current = [];
+    };
+
+    const scheduleTask = (task: () => void, delay: number) => {
+        const timeoutId = setTimeout(task, delay);
+        timeoutIdsRef.current.push(timeoutId);
+    };
 
     const handleAnalyze = () => {
+        clearScheduledTasks();
         if (!diaryContent.trim()) return;
         setCurrentStep(2);
-        setAnalyzing(true);
         setAnalyzingPhase(0);
 
         // 분석 페이즈 애니메이션
-        setTimeout(() => setAnalyzingPhase(1), 600);
-        setTimeout(() => setAnalyzingPhase(2), 1200);
-        setTimeout(() => setAnalyzingPhase(3), 1800);
+        scheduleTask(() => setAnalyzingPhase(1), 600);
+        scheduleTask(() => setAnalyzingPhase(2), 1200);
+        scheduleTask(() => setAnalyzingPhase(3), 1800);
 
         // 실제 분석 실행
-        setTimeout(() => {
+        scheduleTask(() => {
             const result = analyzeSentiment(diaryContent);
-            setAnalysisResult({
-                id: "1",
-                date: selectedDate,
-                title: "오늘의 일기",
-                content: diaryContent,
-                ...result,
-            });
-            setAnalyzing(false);
-            setTimeout(() => setCurrentStep(3), 500);
+            setAnalysisResult(createDiaryEntry("1", selectedDate, diaryContent, result));
+            scheduleTask(() => setCurrentStep(3), 500);
         }, 2500);
     };
 
     const resetDemo = () => {
+        clearScheduledTasks();
         setCurrentStep(0);
+        setSelectedDate("2025-12-20");
         setDiaryContent("");
         setAnalysisResult(null);
-        setAnalyzing(false);
         setAnalyzingPhase(0);
     };
+
+    useEffect(() => {
+        return () => {
+            clearScheduledTasks();
+        };
+    }, []);
 
     const fillPreset = (text: string) => {
         setDiaryContent(text);
@@ -213,7 +80,7 @@ export default function PrimeRingDemo() {
             animate="visible"
             className={cn(
                 "min-h-screen relative overflow-hidden transition-colors duration-500",
-                isDarkMode ? "bg-gray-950 text-white" : "bg-[#F0F4F8] text-deep-navy"
+                isDarkMode ? "bg-gray-950 text-white" : "bg-cool-white text-deep-navy"
             )}
         >
             {/* Exit button */}
@@ -578,7 +445,7 @@ export default function PrimeRingDemo() {
                                     분석 중...
                                 </h2>
                                 <p className={cn("font-light", isDarkMode ? "text-gray-400" : "text-serene-blue")}>
-                                    Gemini AI가 당신의 감정을 읽고 있습니다
+                                    로컬 WebLLM이 당신의 감정을 읽고 있습니다
                                 </p>
                             </div>
 

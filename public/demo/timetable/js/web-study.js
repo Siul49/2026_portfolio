@@ -9,7 +9,7 @@ function openModal() {
 
 function closeModal() {
     document.getElementById("modal").classList.add("hidden");
-    document.getElementById("modal-sub").classList("hidden");
+    document.getElementById("modal-sub").classList.add("hidden");
     document.body.classList.remove("overflow-hidden");
 }
 
@@ -361,3 +361,8 @@ const steps = [
         code: "",
     }
 ];
+
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.nextStep = nextStep;
+window.lastStep = lastStep;

@@ -80,7 +80,7 @@ document.getElementById("processBtn").addEventListener("click", function () {
         const rowCount = arr.length;
         let html = ''; // 테이블 태그 없이 내용만 반환
 
-        arr.forEach((row, rowIndex) => {
+        arr.forEach((row) => {
             html += `<tr style="height: ${100 / rowCount}%;">`;
             row.forEach(cell => {
                 html += `<td class="break-words text-wrap p-1 border border-black align-top">${cell}</td>`;

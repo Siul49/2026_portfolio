@@ -1,43 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { fadeInUp, smoothSpring, smooth, staggerContainer, hoverLift, pageTransition } from "../../../lib/animations";
+import { fadeInUp, smoothSpring, smooth, staggerContainer, pageTransition } from "../../../lib/animations";
 import { cn } from "../../../lib/utils";
 import BackLink from "../../../components/ui/BackLink";
 import Button from "../../../components/ui/Button";
-
-interface Course {
-    id: string;
-    name: string;
-    code: string;
-    weeks: number;
-    materials: number;
-}
-
-interface DownloadItem {
-    name: string;
-    type: string;
-    size: string;
-    status: "pending" | "downloading" | "completed" | "failed";
-}
-
-const steps = ["로그인", "강의 목록", "다운로드 중", "완료"];
-
-const sampleCourses: Course[] = [
-    { id: "1", name: "섬김의리더십", code: "2150533701", weeks: 15, materials: 45 },
-    { id: "2", name: "오픈소스기반기초설계", code: "2150061301", weeks: 15, materials: 30 },
-    { id: "3", name: "행복한가족을만드는관계기술", code: "2150153601", weeks: 15, materials: 35 },
-];
-
-const sampleDownloads: DownloadItem[] = [
-    { name: "섬김의리더십_OT(25-2).pdf", type: "PDF", size: "2.4 MB", status: "completed" },
-    { name: "섬김의리더십_1주차.pdf", type: "PDF", size: "3.1 MB", status: "completed" },
-    { name: "섬김의리더십_2주차.pdf", type: "PDF", size: "2.8 MB", status: "completed" },
-    { name: "섬김의리더십_3주차.pdf", type: "PDF", size: "3.5 MB", status: "downloading" },
-    { name: "섬김의리더십_4주차.pdf", type: "PDF", size: "2.9 MB", status: "pending" },
-    { name: "섬김의리더십_5주차.pdf", type: "PDF", size: "3.2 MB", status: "pending" },
-];
+import { DownloadItem, steps, sampleCourses, sampleDownloads } from "./data";
 
 export default function LmsDemo() {
     const [currentStep, setCurrentStep] = useState(0);
@@ -113,7 +82,7 @@ export default function LmsDemo() {
             variants={pageTransition}
             initial="hidden"
             animate="visible"
-            className="min-h-screen relative overflow-hidden bg-[#F0F4F8] text-deep-navy"
+            className="min-h-screen relative overflow-hidden bg-cool-white text-deep-navy"
         >
             {/* Exit button */}
             <BackLink
@@ -131,7 +100,7 @@ export default function LmsDemo() {
                                 <motion.div
                                     initial={false}
                                     animate={{
-                                        backgroundColor: index <= currentStep ? "var(--color-search-bg)" : "#E2E8F0", // deep-navy vs slate-200
+                                        backgroundColor: index <= currentStep ? "var(--color-deep-navy)" : "#E2E8F0",
                                         scale: index === currentStep ? 1 : 0.8,
                                     }}
                                     transition={smooth}

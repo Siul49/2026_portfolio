@@ -21,7 +21,7 @@ export default function Footer() {
         {/* ─── Top: Editorial Heading ──────────────────── */}
         <motion.div variants={fadeInUp} className="max-w-3xl">
           <span className="font-mono text-xs tracking-[0.2em] text-neutral-400 uppercase mb-6 block">
-            // Contact
+            {"// Contact"}
           </span>
           <h2 className="text-4xl md:text-6xl font-serif font-bold text-deep-navy leading-[1.05] tracking-tight">
             Let&rsquo;s Build Something{" "}
@@ -41,7 +41,7 @@ export default function Footer() {
         >
           {/* GitHub */}
           <a
-            href="https://github.com/your-username"
+            href="https://github.com/Siul49"
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-3 font-mono text-sm text-serene-blue hover:text-deep-navy transition-colors duration-300"
@@ -63,7 +63,7 @@ export default function Footer() {
 
           {/* Email */}
           <a
-            href="mailto:hello@example.com"
+            href="mailto:kksu149@gmail.com"
             className="group inline-flex items-center gap-3 font-mono text-sm text-serene-blue hover:text-deep-navy transition-colors duration-300"
           >
             <svg
@@ -81,7 +81,7 @@ export default function Footer() {
               />
             </svg>
             <span className="border-b border-current border-opacity-30 pb-px group-hover:border-opacity-100 transition-all duration-300">
-              hello@example.com
+              kksu149@gmail.com
             </span>
           </a>
         </motion.div>

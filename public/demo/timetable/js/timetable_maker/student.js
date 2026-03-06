@@ -22,7 +22,7 @@ export class Student {
                         const day = this.convertDay(tokens[i]); // 요일 문자열을 숫자로 변환
                         this.possibleTable[cnt][day] = true;    // 해당 시간대, 요일에 true 표시
                         this.selectCnt++;                       // 가능한 시간 개수 증가
-                    } catch (e) {}
+                    } catch {}
                 }
             } else {
                 // 한 개의 요일만 있는 경우
