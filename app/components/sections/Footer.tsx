@@ -19,25 +19,22 @@ export default function Footer() {
         whileInView="visible"
         viewport={{ once: true }}
       >
-        <motion.div variants={fadeInUp} className="max-w-3xl">
+        <motion.div variants={fadeInUp} className="max-w-2xl">
           <span className="mb-6 block font-mono text-xs tracking-[0.2em] text-neutral-500 uppercase">
-            {"// Hiring & Collaboration"}
+            {"// Contact"}
           </span>
-          <h2 className="text-4xl leading-[1.05] font-serif font-bold tracking-tight text-deep-navy md:text-6xl">
-            채용과 협업을 위한{" "}
-            <span className="font-light italic text-serene-blue">연락처</span>
+          <h2 className="text-4xl leading-[1.05] font-serif font-bold tracking-tight text-deep-navy md:text-5xl">
+            연락처
           </h2>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed font-light text-neutral-600">
-            백엔드, 데이터 파이프라인, 자동화 프로젝트에 관심이 있습니다.
-            채용 제안이나 협업 문의는 이메일 또는 GitHub를 통해 확인하고
-            있습니다.
+          <p className="mt-4 text-base leading-relaxed font-light text-neutral-600">
+            이메일과 GitHub 링크를 남겨두었습니다.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Button href="mailto:kksu149@gmail.com" size="md">
-              이메일 보내기
+              Email
             </Button>
             <Button href="https://github.com/Siul49" external variant="outline" size="md">
-              GitHub 보기
+              GitHub
             </Button>
           </div>
         </motion.div>
@@ -98,7 +95,7 @@ export default function Footer() {
               &copy; 2026 Kim Gyeongsu
             </span>
             <span className="font-mono text-xs text-neutral-500">
-              Backend Portfolio built with Next.js
+              Portfolio built with Next.js
             </span>
           </div>
         </motion.div>
