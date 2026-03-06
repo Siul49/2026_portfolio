@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { fadeInUp, fadeInLeft, staggerContainer } from "../../lib/animations";
 import Container from "../../components/ui/Container";
 import Badge from "../../components/ui/Badge";
+import { withBasePath } from "../../lib/site";
 
 const highlights = [
   {
@@ -33,6 +35,8 @@ const stack = [
   "LLM",
 ];
 
+const profileImageSrc = withBasePath("/images/profile/kim-gyeongsu-grad-profile.jpg");
+
 export default function About() {
   return (
     <Container
@@ -59,16 +63,36 @@ export default function About() {
             <div className="mt-3 h-[1px] w-full bg-deep-navy opacity-10" />
           </div>
 
+          <figure className="overflow-hidden rounded-sm border border-grid-line bg-neutral-50">
+            <div className="relative aspect-[4/5] w-full">
+              <Image
+                src={profileImageSrc}
+                alt="Kim Gyeongsu portrait"
+                fill
+                priority
+                className="object-cover object-center"
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
+            </div>
+            <figcaption className="border-t border-grid-line px-5 py-4">
+              <p className="font-mono text-xs tracking-[0.22em] text-serene-blue uppercase">
+                Kim Gyeongsu
+              </p>
+              <p className="mt-2 text-sm font-light text-neutral-600">
+                Backend Developer
+              </p>
+            </figcaption>
+          </figure>
+
           <div className="rounded-sm border border-grid-line bg-neutral-50/70 p-6">
-            <p className="font-mono text-xs tracking-[0.22em] text-serene-blue uppercase">
-              Kim Gyeongsu
-            </p>
-            <h2 className="mt-4 text-3xl leading-tight font-serif font-bold text-deep-navy md:text-4xl">
-              Backend Developer
+            <h2 className="text-3xl leading-tight font-serif font-bold text-deep-navy md:text-4xl">
+              유지보수 비용이 낮은
+              <br />
+              백엔드를 설계합니다
             </h2>
             <p className="mt-4 text-base leading-relaxed font-light text-neutral-600">
-              유지보수 비용이 낮은 데이터 수집 시스템과 멀티모달 입력 기반
-              백엔드를 설계합니다.
+              데이터 수집 시스템, 멀티모달 입력 처리, 자동화 워크플로우를
+              서비스 관점에서 연결하는 일을 좋아합니다.
             </p>
           </div>
 
