@@ -45,11 +45,15 @@ export default function Hero() {
             transition={smoothSlow}
             className="max-w-5xl text-5xl leading-[0.95] font-serif font-bold tracking-tighter text-deep-navy md:text-8xl"
           >
-            개발 경험을 바탕으로
+            <span className="font-light text-deep-navy/75">
+              개발 경험을 바탕으로
+            </span>
             <br />
             무엇을 왜 먼저 만들지
             <br />
-            고민하는 PM 지원자입니다.
+            고민하는{" "}
+            <span className="font-light italic text-serene-blue">PM</span>{" "}
+            지원자입니다.
           </motion.h1>
 
           <motion.p
