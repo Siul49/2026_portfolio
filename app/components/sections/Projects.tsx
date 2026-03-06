@@ -55,26 +55,20 @@ export default function Projects() {
       >
         {projects.map((project, index) => {
           let colSpan = "md:col-span-4";
-          let aspectRatio = "aspect-[3/4]";
           let marginTop = "";
 
           if (index === 0) {
             colSpan = "md:col-span-12 md:col-start-1 lg:col-span-7";
-            aspectRatio = "aspect-[16/9]";
           } else if (index === 1) {
             colSpan = "md:col-span-12 md:col-start-1 lg:col-span-5";
-            aspectRatio = "aspect-[4/3] lg:aspect-[4/3.5]";
             marginTop = "lg:mt-12";
           } else if (index === 2) {
             colSpan = "md:col-span-12 md:col-start-1 lg:col-span-5";
-            aspectRatio = "aspect-[4/5]";
           } else if (index === 3) {
             colSpan = "md:col-span-12 md:col-start-1 lg:col-span-7";
-            aspectRatio = "aspect-[16/10]";
             marginTop = "lg:mt-8";
           } else {
             colSpan = "md:col-span-6 lg:col-span-4";
-            aspectRatio = "aspect-[3/4]";
             if (index === 5) {
               marginTop = "lg:mt-12";
             }
@@ -89,7 +83,8 @@ export default function Projects() {
               <Link href={project.link || "#"}>
                 <motion.div {...hoverLift}>
                   <div
-                    className={`relative mb-6 overflow-hidden border border-grid-line bg-neutral-50 transition-all duration-300 ease-out hover:shadow-lg ${aspectRatio}`}
+                    className="relative mb-6 overflow-hidden border border-grid-line bg-neutral-50 transition-all duration-300 ease-out hover:shadow-lg"
+                    style={{ aspectRatio: project.previewAspectRatio }}
                   >
                     {project.thumbnail ? (
                       <Image

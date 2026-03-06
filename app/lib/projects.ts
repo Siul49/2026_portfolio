@@ -10,6 +10,7 @@ export interface Project {
   featured: boolean;
   link: string;
   thumbnail: string;
+  previewAspectRatio: string;
 }
 
 export const projects: Project[] = [
@@ -24,6 +25,7 @@ export const projects: Project[] = [
     featured: true,
     link: "/projects/pick-habju",
     thumbnail: withBasePath("/images/projects/pick-habju.png"),
+    previewAspectRatio: "1280 / 800",
   },
   {
     id: "02",
@@ -36,6 +38,7 @@ export const projects: Project[] = [
     featured: true,
     link: "/projects/bimo",
     thumbnail: withBasePath("/images/projects/bimo.png"),
+    previewAspectRatio: "1280 / 800",
   },
   {
     id: "03",
@@ -48,6 +51,7 @@ export const projects: Project[] = [
     featured: false,
     link: "/projects/prime-ring",
     thumbnail: withBasePath("/images/projects/prime-ring.png"),
+    previewAspectRatio: "1280 / 800",
   },
   {
     id: "04",
@@ -60,6 +64,7 @@ export const projects: Project[] = [
     featured: false,
     link: "/projects/ddip",
     thumbnail: withBasePath("/images/projects/ddip.png"),
+    previewAspectRatio: "1280 / 800",
   },
   {
     id: "05",
@@ -72,6 +77,7 @@ export const projects: Project[] = [
     featured: false,
     link: "/projects/lms",
     thumbnail: withBasePath("/images/projects/lms.png"),
+    previewAspectRatio: "1280 / 800",
   },
   {
     id: "06",
@@ -84,6 +90,7 @@ export const projects: Project[] = [
     featured: false,
     link: "/projects/timetable",
     thumbnail: withBasePath("/images/projects/timetable.png"),
+    previewAspectRatio: "1125 / 664",
   },
   {
     id: "07",
@@ -96,6 +103,7 @@ export const projects: Project[] = [
     featured: false,
     link: "/projects/twoplus",
     thumbnail: withBasePath("/images/projects/twoplus.png"),
+    previewAspectRatio: "1280 / 800",
   },
 ];
 
