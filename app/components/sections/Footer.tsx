@@ -94,9 +94,14 @@ export default function Footer() {
             <span className="font-mono text-xs text-neutral-500">
               &copy; 2026 Kim Gyeongsu
             </span>
-            <span className="font-mono text-xs text-neutral-500">
-              Portfolio built with Next.js
-            </span>
+            <div className="flex flex-col gap-1 text-left sm:text-right">
+              <span className="font-mono text-xs text-neutral-500">
+                Portfolio built with Next.js
+              </span>
+              <span className="font-mono text-xs text-neutral-500">
+                멋사를 위한 포트폴리오
+              </span>
+            </div>
           </div>
         </motion.div>
       </motion.div>
