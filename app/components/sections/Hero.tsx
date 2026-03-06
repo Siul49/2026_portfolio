@@ -47,9 +47,9 @@ export default function Hero() {
           >
             개발 경험을 바탕으로
             <br />
-            무엇을 왜 먼저 만들지 고민하는
+            무엇을 왜 먼저 만들지
             <br />
-            PM 지원자입니다.
+            고민하는 PM 지원자입니다.
           </motion.h1>
 
           <motion.p
