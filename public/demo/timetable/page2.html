@@ -1,178 +1,92 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>타임테이블 페이지 2</title>
-
-    <!-- CSS 라이브러리 -->
-    <link rel="stylesheet" href="css/style.css"/>
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <script type="module" src="js/timetable_maker/app.js"></script>
-
-    <!--파일 불러오는 라이브러리-->
-    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>타임테이블 페이지 2</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="js/timetable_maker/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
 </head>
+<body class="tt-page">
+  <main class="tt-shell">
+    <header class="tt-topbar">
+      <div class="tt-topbar__group">
+        <button type="button" onclick="location.reload();" class="tt-chip tt-chip--accent">
+          타임테이블 페이지
+        </button>
+        <button type="button" onclick="history.back();" class="tt-chip tt-chip--blue">
+          이전 단계
+        </button>
+      </div>
+      <p class="tt-topbar__hint">
+        CSV를 올린 뒤 생성하기를 누르면 시간표 HTML 파일이 다운로드됩니다.
+      </p>
+    </header>
 
-<!-- 배경 -->
-<body class="
-    bg-[#FEE9CE]
-    w-screen h-screen flex justify-center items-center
-">
+    <section class="tt-shell-card">
+      <div class="tt-stage tt-stage--page2">
+        <label class="tt-panel tt-panel--pink tt-upload-surface">
+          <input type="file" id="csvInput" accept=".csv" class="tt-file-input">
+          <span class="tt-label">CSV Upload</span>
+          <strong>드래그하거나 클릭해서<br>CSV 파일을 첨부하기</strong>
+          <p>학생 이름, 개인번호, 가능 시간대가 담긴 CSV 파일을 업로드하세요.</p>
+        </label>
 
+        <div class="tt-page2-side">
+          <button type="button" id="processBtn" class="tt-hero-button">※ 생성하기 ※</button>
 
-<!-- 상단 페이지 버튼 -->
-<button
-        onclick="location.reload();"
-        class="
-            absolute
-            w-[10%] h-[10%]
-            left-[20%] top-[7.5%]
-            bg-[#FDE295] text-black
-            flex justify-center
-            py-2
-            border-black rounded-2xl
-            border-[5px]
-            shadow-[2px_2px_0px_black]
-        ">
-    ※타임테이블 페이지
-</button>
-
-
-
-<!-- 전체 컨테이너 (하얀색 박스) -->
-<div class="
-            relative
-            w-[65%] h-[75%]
-            bg-white border-[5px] shadow-[4px_4px_0px_black] rounded-2xl border-black
-            flex justify-center items-center
-            ">
-
-    <!-- 분홍색 박스 -->
-    <button class="
-                absolute
-                w-[40%] h-[60vh]
-                right-[52%]
-                bg-[#FFC5D3] rounded-3xl
-                shadow-[4px_4px_0px_black]
-                border-4 border-black
-                flex justify-center items-center px-4
-                text-2xl text-center
-                hover:bg-pink-300 transition-all
-                cursor-pointer
-            ">
-
-        드래그 & 드롭, 클릭으로
-        <br> 파일 (.csv) 첨부하기
-
-        <!-- 파일 입력창 -->
-        <input
-                type="file"
-                id="csvInput"
-                accept=".csv"
-                class="
-                    absolute
-                    w-full h-full
-                    cursor-pointer
-                    text-xl
-                    opacity-0
-                "/>
-        <!-- end of 파일 입력창 -->
-
-    </button> <!-- end of 분홍색 박스 -->
-
-    <!-- 노란색 박스 -->
-    <button id="processBtn"
-            class="
-                absolute
-                w-[38%] h-[18vh]
-                right-[8%] top-[9.5%]
-                bg-[#FDE295] rounded-3xl
-                drop-shadow-[4px_4px_0px_black]
-                border-4 border-black
-                flex justify-center items-center
-                text-3xl
-                hover:bg-yellow-300 transition-all
-            ">
-        ※생성하기※
-    </button> <!-- end of 노란색 박스 -->
-
-    <!-- 연한 회색 박스 -->
-    <div class="
-                absolute
-                w-[38%] h-[31vh]
-                right-[8%] top-[37%]
-                bg-[#EDEDED] rounded-3xl
-                shadow-[4px_4px_0px_black]
-                border-4 border-black
-                flex justify-center items-center
-                text-3xl
-                hover:bg-gray-200 transition-all
-            ">
-        설명
-    </div>
-
-    <!-- 회색 박스 -->
-
-    <button onclick="openModal()" class="
-                absolute
-                w-[20%] h-[6vh]
-                right-[26%] top-[82%]
-                bg-[#D9D9D9] rounded-3xl
-                drop-shadow-[4px_4px_0px_black]
-                border-4 border-black
-                flex justify-center items-center
-                text-xl
-                hover:bg-gray-300 transition-all
-            ">
-        제작자 코멘트
-    </button>
-
-    <!-- 모달 -->
-    <div id="modal" class="hidden fixed inset-0 bg-black/10 z-50 flex items-center justify-center">
-        <div class="relative w-[30%] h-[50%] bg-[#F8D7DF]/95 border-4 border-black rounded-xl shadow-lg pt-12">
-            <!-- 모달 상단 -->
-            <div class="absolute top-0 left-0 w-full h-12 bg-[#F2F2F2]/95 border-b-4 border-black rounded-t-xl flex items-center px-4 justify-between">
-                <p id="modal-mainText" class="text-base">여기는 모달 상단(제목)입니다람쥐!</p>
-                <button onclick="closeModal()" class="p-1">
-                    <img src="../../resource/close.svg" alt="닫기 버튼" class="w-5 h-5" />
-                </button>
+          <section class="tt-panel tt-panel--neutral">
+            <div class="tt-panel__bar">설명</div>
+            <div class="tt-panel__body">
+              <p>
+                업로드한 CSV를 바탕으로 가능한 시간표를 계산한 뒤,
+                결과를 별도의 HTML 파일로 저장합니다.
+              </p>
+              <ul class="tt-bullet-list">
+                <li>1. 먼저 CSV 파일을 업로드합니다.</li>
+                <li>2. 생성하기 버튼을 눌러 시간표를 계산합니다.</li>
+                <li>3. 결과가 담긴 HTML 파일을 내려받아 확인합니다.</li>
+              </ul>
             </div>
+          </section>
 
-            <!-- 모달 본문 -->
-            <div class="absolute top-16 left-[5%] right-[5%] w-[90%] h-[70%] bg-[#F2F2F2]/95 rounded-lg p-4">
-                <p id="modal-ContentText" class="text-sm">코드 설명 부분입니다람쥐</p>
-            </div>
-
-            <!-- 버튼 -->
-            <button onclick="lastStep()" class="absolute bottom-5 left-[10%] w-[30%] h-[8%] bg-[#F2F2F2]/95 border-4 border-black rounded-md shadow hover:bg-[#D7D7D7] active:scale-95 transition last-button">
-                이전으로
+          <div class="tt-inline-actions">
+            <button type="button" onclick="openModal()" class="tt-action-btn tt-action-btn--muted">
+              제작자 코멘트
             </button>
-            <button onclick="nextStep()" class="absolute bottom-5 right-[10%] w-[30%] h-[8%] bg-[#F2F2F2]/95 border-4 border-black rounded-md shadow hover:bg-[#D7D7D7] active:scale-95 transition next-button">
-                다음으로
+            <button type="button" onclick="history.back()" class="tt-action-btn tt-action-btn--blue">
+              이전으로
             </button>
+          </div>
         </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="modal" class="tt-modal-backdrop hidden">
+    <div class="tt-modal-card">
+      <div class="tt-modal-header">
+        <p id="modal-mainText">개발자 코멘트</p>
+        <button type="button" onclick="closeModal()" class="tt-close-btn">
+          <img src="../../resource/close.svg" alt="닫기">
+        </button>
+      </div>
+
+      <div class="tt-modal-body">
+        <div class="tt-modal-text">
+          <p id="modal-ContentText">코드 설명 부분입니다.</p>
+        </div>
+      </div>
+
+      <div class="tt-modal-actions">
+        <button type="button" onclick="lastStep()" class="tt-modal-button last-button">이전으로</button>
+        <button type="button" onclick="nextStep()" class="tt-modal-button next-button">다음으로</button>
+      </div>
     </div>
-    <!-- 하늘색 박스 -->
-    <button onclick="history.back()" class="
-                absolute
-                w-[16%] h-[6vh]
-                right-[8%] top-[82%]
-                bg-[#BBDBF4] rounded-3xl
-                drop-shadow-[4px_4px_0px_black]
-                border-4 border-black
-                flex justify-center items-center
-                text-xl
-                hover:bg-blue-300 transition-all
-            ">
-        이전으로
-    </button>
+  </div>
 
-</div> <!-- end of 전체 컨테이너 -->
-
-
-<script src="js/comment_modal.js"></script>
+  <script src="js/comment_modal.js"></script>
 </body>
 </html>

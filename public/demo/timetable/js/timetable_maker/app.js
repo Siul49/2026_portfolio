@@ -83,7 +83,7 @@ document.getElementById("processBtn").addEventListener("click", function () {
         arr.forEach((row) => {
             html += `<tr style="height: ${100 / rowCount}%;">`;
             row.forEach(cell => {
-                html += `<td class="break-words text-wrap p-1 border border-black align-top">${cell}</td>`;
+                html += `<td>${cell}</td>`;
             });
             html += '</tr>';
         });
@@ -94,10 +94,11 @@ document.getElementById("processBtn").addEventListener("click", function () {
 // 2. HTML 전체 문서로 감싸기
     function wrapHtml(bodyContent) {
         return `
-             <!DOCTYPE html>
+            <!DOCTYPE html>
             <html lang="ko">
             <head>
               <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
               <title>시간표</title>
               <style>
                 @font-face {
@@ -107,48 +108,95 @@ document.getElementById("processBtn").addEventListener("click", function () {
                   font-style: normal;
                 }
                 body {
+                  margin: 0;
+                  min-height: 100svh;
                   font-family: 'TAEBAEKfont', sans-serif;
+                  color: #10213a;
+                  background:
+                    radial-gradient(circle at top, rgba(255, 255, 255, 0.72), transparent 48%),
+                    linear-gradient(180deg, #fff7eb 0%, #fee9ce 100%);
+                }
+                * {
+                  box-sizing: border-box;
+                }
+                .page {
+                  padding: clamp(16px, 3vw, 32px);
+                }
+                .shell {
+                  width: min(1100px, 100%);
+                  margin: 0 auto;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 16px;
+                }
+                .chip {
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: center;
+                  min-height: 48px;
+                  padding: 12px 20px;
+                  background: #fde295;
+                  border: 4px solid #000;
+                  border-radius: 999px;
+                  box-shadow: 4px 4px 0 #000;
+                }
+                .card {
+                  background: rgba(255, 255, 255, 0.96);
+                  border: 4px solid #000;
+                  border-radius: 28px;
+                  box-shadow: 6px 6px 0 #000;
+                  overflow: hidden;
+                }
+                .header {
+                  padding: 16px 20px;
+                  background: rgba(255, 255, 255, 0.96);
+                  border-bottom: 4px solid #000;
+                  font-size: clamp(18px, 2vw, 24px);
+                }
+                .table-wrap {
+                  overflow: auto;
+                  padding: 16px;
+                }
+                table {
+                  width: 100%;
+                  min-width: 720px;
+                  table-layout: fixed;
+                  border-collapse: collapse;
+                  background: #fff;
+                }
+                td {
+                  padding: 10px;
+                  border: 2px solid #000;
+                  vertical-align: top;
+                  word-break: break-word;
+                  line-height: 1.45;
+                }
+                @media (max-width: 640px) {
+                  .page {
+                    padding: 12px;
+                  }
+                  .table-wrap {
+                    padding: 12px;
+                  }
                 }
               </style>
-              <script src="https://cdn.tailwindcss.com"></script>
             </head>
-            <body class="
-                bg-[#FEE9CE]
-                w-screen h-screen
-                flex justify-center items-center
-            ">
-            
-            <!-- 상단 페이지 버튼 -->
-            <button
-                    onclick="location.reload();"
-                    class="absolute
-                           w-[10%] h-[10%]
-                           left-[20%] top-[8%]
-                           bg-[#FDE295]
-                           text-black
-                           flex justify-center
-                           py-2
-                           border-black border-[5px] rounded-2xl
-                           shadow-[2px_2px_0px_black] ">
-              ※타임테이블 페이지
-            </button>
-            <div
-                  class="
-                    relative
-                    w-[65%] h-[75%]
-                    bg-white
-                    border-[5px] border-black
-                    shadow-[4px_4px_0px_black]
-                    rounded-2xl
-                    overflow-auto
-                  "
-            >
-                  <table class="w-full h-full table-fixed border-collapse text-m">
-                  <tbody class="h-full">
-                        ${bodyContent}
-                  </tbody>
-                </table>
-            </div>
+            <body>
+              <main class="page">
+                <section class="shell">
+                  <div class="chip">생성된 타임테이블</div>
+                  <div class="card">
+                    <div class="header">CSV 데이터를 기반으로 생성된 시간표 결과</div>
+                    <div class="table-wrap">
+                      <table>
+                        <tbody>
+                          ${bodyContent}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </section>
+              </main>
             </body>
             </html>
         `;
