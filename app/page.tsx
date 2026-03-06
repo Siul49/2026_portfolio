@@ -21,8 +21,8 @@ export default function Home() {
     <div className="flex flex-col w-full">
       <SectionNav />
       <Hero />
-      <About />
       <Projects />
+      <About />
     </div>
   );
 }

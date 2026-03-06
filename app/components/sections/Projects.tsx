@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { fadeInUp, staggerContainer, hoverLift } from "../../lib/animations";
+import { fadeInUp, hoverLift, staggerContainer } from "../../lib/animations";
 import { projects } from "../../lib/projects";
 import Badge from "../ui/Badge";
 import Container from "../ui/Container";
@@ -14,20 +14,29 @@ export default function Projects() {
       as="section"
       size="wide"
       id="projects"
-      className="min-h-screen border-t border-grid-line py-20"
+      className="min-h-screen border-t border-grid-line py-24 md:py-28"
     >
       <div className="mb-20 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div>
+          <motion.p
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="font-mono text-xs tracking-[0.28em] text-neutral-500 uppercase"
+          >
+            Selected Work
+          </motion.p>
           <motion.h2
             variants={fadeInUp}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="text-5xl font-serif font-bold text-deep-navy"
+            className="mt-3 text-5xl font-serif font-bold text-deep-navy md:text-6xl"
           >
-            Projects That Taught Me
+            Selected
             <br />
-            How Teams Move
+            Projects
           </motion.h2>
           <motion.p
             variants={fadeInUp}
@@ -36,13 +45,12 @@ export default function Projects() {
             viewport={{ once: true }}
             className="mt-4 max-w-2xl text-base leading-relaxed font-light text-neutral-600"
           >
-            무엇을 만들었는지보다, 어떤 문제를 어떻게 정의했고 그 과정에서
-            무엇을 배웠는지 중심으로 정리했습니다. 백엔드 경험은 결과보다도
-            우선순위와 협업 방식을 배우는 계기가 되었습니다.
+            문제를 어떻게 정의했고, 어떤 우선순위와 협업 방식으로 풀어냈는지 보여주는
+            프로젝트를 먼저 배치했습니다.
           </motion.p>
         </div>
         <span className="hidden font-mono text-xs tracking-widest text-neutral-500 md:block">
-          (2024 — 2026)
+          (2024 - 2026)
         </span>
       </div>
 

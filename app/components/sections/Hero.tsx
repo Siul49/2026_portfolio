@@ -61,11 +61,10 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             transition={{ ...smoothSlow, delay: 0.8 }}
-            className="mt-10 max-w-3xl text-[1.02rem] leading-[1.85] font-light text-neutral-600 md:text-[1.16rem]"
+            className="mt-8 max-w-2xl text-base leading-[1.8] font-light text-neutral-600 md:text-[1.08rem]"
           >
-            픽합주에서 백엔드 팀 리드를 맡으며, 좋은 서비스를 만드는 데에는 구현만큼 문제
-            정의와 우선순위 설정, 팀이 같은 방향으로 움직이게 만드는 역할이 중요하다는 것을
-            배웠습니다. 이제 그 경험을 PM의 언어로 확장하고 싶습니다.
+            백엔드 팀 리드 경험을 바탕으로, 문제 정의와 우선순위 설정으로 팀과 서비스를 같은
+            방향으로 움직이게 만드는 PM을 준비하고 있습니다.
           </motion.p>
 
           <motion.div
@@ -101,7 +100,7 @@ export default function Hero() {
       </div>
 
       <button
-        onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
+        onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
         className="absolute bottom-10 left-1/2 flex -translate-x-1/2 cursor-pointer flex-col items-center gap-2 border-none bg-transparent opacity-40 transition-opacity duration-300 hover:opacity-70"
       >
         <span className="font-mono text-[10px] tracking-[0.3em]">SCROLL</span>
