@@ -10,31 +10,43 @@ import { ROOMS, TIME_SLOTS, Room } from "./data";
 
 const pipelineSteps = [
   {
-    label: "Raw HTML",
-    icon: "🌐",
-    desc: "네이버 지도에서 합주실 페이지 크롤링",
-    detail: "<div class=\"place_bluelink\">비쥬합주실 1호점</div>\n<span class=\"LDgIH\">22,000원</span>\n<div class=\"o...",
+    label: "우선 지역 쿼리",
+    icon: "📍",
+    desc: "이수·상도·사당·흑석·홍대입구·합정역 쿼리로 후보 지점을 넓게 모읍니다",
+    detail:
+      '["이수역 합주실", "상도역 합주실", "사당역 합주실",\n "흑석역 합주실", "홍대입구역 합주실", "합정역 합주실"]',
     color: "bg-neutral-200 text-deep-navy/60",
   },
   {
-    label: "Trafilatura",
-    icon: "🧹",
-    desc: "불필요한 태그, 광고, 스크립트 제거",
-    detail: "비쥬합주실 1호점\n가격: 22,000원/시간\n수용인원: 최대 15명, 권장 11명\n위치: 이수역 도보 7분",
+    label: "Apollo State 파싱",
+    icon: "🧭",
+    desc: "Playwright로 지도 결과를 열고 bookingBusinessId가 있는 예약 지점만 추립니다",
+    detail:
+      "PlaceSummary -> { id: bookingBusinessId, placeId, name, address }\nPlaceDetail -> { description, businessHours, phone }\nBookingBusiness -> { bookingUrl, businessCategory }",
     color: "bg-faded-blue/30 text-deep-navy",
   },
   {
-    label: "Ollama (Llama 3)",
-    icon: "🤖",
-    desc: "LLM이 텍스트를 의미론적으로 이해하고 JSON 추출",
-    detail: '{\n  "name": "블랙룸",\n  "branch": "비쥬합주실 1호점",\n  "price_per_hour": 22000,\n  "max_capacity": 15\n}',
+    label: "Booking GraphQL 상세조회",
+    icon: "🧾",
+    desc: "business, bizItems, nearSubway를 조회해 가격, 방 정보, 역세권 정보를 채웁니다",
+    detail:
+      'business(input:{businessId})\nbizItems(input:{ businessId, projections:"MIN_MAX_PRICE,RESOURCE" })\nnearSubway(input:{ latitude, longitude, placeId })',
     color: "bg-serene-blue/20 text-serene-blue",
   },
   {
-    label: "Schema Validation",
+    label: "누락 정보 보강",
+    icon: "🔎",
+    desc: "대표 키워드와 전화번호가 비면 정보 탭과 전화번호 보기 흐름으로 한 번 더 확인합니다",
+    detail:
+      "정보 탭 -> representativeKeywords 복구\n전화번호 보기 클릭 -> /rest/phone 응답 확인\nsource_hint + place 페이지 결과를 함께 보강",
+    color: "bg-faded-blue text-deep-navy",
+  },
+  {
+    label: "예약 메타데이터 필터",
     icon: "✅",
-    desc: "Pydantic 스키마 검증 후 DB 저장 (성공률 92%)",
-    detail: "Room(name=\"블랙룸\", branch=\"비쥬합주실 1호점\", price_per_hour=22000, max_capacity=15) ✓ VALIDATED",
+    desc: "가격·예약 시간 정보가 있는 방만 남기고 레슨/레코딩 라벨은 제외합니다",
+    detail:
+      "keep if price | minBookingTime | maxBookingTime | bookingTimeUnitCode | bookingPrecautionJson exists\nexclude if room name contains 레슨 | 레코딩\n문의 필요 room은 별도 표식",
     color: "bg-deep-navy text-white",
   },
 ];
@@ -102,6 +114,7 @@ export default function PickHabjuDemo() {
       setTimeout(() => setPipelinePhase(2), 900);
       setTimeout(() => setPipelinePhase(3), 1400);
       setTimeout(() => setPipelinePhase(4), 1900);
+      setTimeout(() => setPipelinePhase(5), 2400);
     } else {
       setShowPipeline(false);
       setPipelinePhase(0);
@@ -218,7 +231,7 @@ export default function PickHabjuDemo() {
                 </div>
               </motion.div>
 
-              {/* LLM Pipeline Visualization */}
+              {/* Collection Pipeline Visualization */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -231,7 +244,7 @@ export default function PickHabjuDemo() {
                 >
                   <span className="inline-flex items-center gap-2">
                     <span className="w-4 h-[1px] bg-serene-blue/20 group-hover:bg-serene-blue/40 transition-colors" />
-                    이 데이터는 어떻게 수집되나?
+                    이 데이터는 어떻게 모으고 거르나?
                     <motion.span
                       animate={{ rotate: showPipeline ? 180 : 0 }}
                       transition={smooth}
@@ -253,9 +266,9 @@ export default function PickHabjuDemo() {
                     >
                       <div className="bg-white/60 backdrop-blur-xl rounded-2xl border border-deep-navy/5 p-6 shadow-lg">
                         <div className="text-center mb-6">
-                          <span className="text-[10px] font-mono text-serene-blue/60 tracking-widest uppercase">{"/// Semantic Extraction Pipeline"}</span>
-                          <h4 className="text-lg font-serif font-bold text-deep-navy mt-1">LLM 기반 적응형 크롤링</h4>
-                          <p className="text-[11px] text-neutral-400 mt-1">CSS 선택자가 아닌 의미론적 이해로 데이터를 추출합니다</p>
+                          <span className="text-[10px] font-mono text-serene-blue/60 tracking-widest uppercase">{"/// Room Collection Flow"}</span>
+                          <h4 className="text-lg font-serif font-bold text-deep-navy mt-1">합주실 기본 정보를 모으는 흐름</h4>
+                          <p className="text-[11px] text-neutral-400 mt-1">지도 검색, Booking GraphQL, 정보 탭 보강, 예약 메타데이터 필터를 차례로 거칩니다</p>
                         </div>
 
                         <div className="space-y-3">
@@ -298,14 +311,14 @@ export default function PickHabjuDemo() {
                           ))}
                         </div>
 
-                        {pipelinePhase >= 4 && (
+                        {pipelinePhase >= 5 && (
                           <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             className="mt-4 pt-4 border-t border-deep-navy/5 text-center"
                           >
                             <span className="text-[10px] font-mono text-deep-navy/40">
-                              데이터 정규화 성공률 <strong className="text-deep-navy">92%</strong> • Rule-based 대비 유지보수 비용 <strong className="text-deep-navy">↓78%</strong>
+                              우선 지역 쿼리, 예약 지점 선별, Booking GraphQL, 정보 탭 보강으로 room 기본 정보를 채웁니다
                             </span>
                           </motion.div>
                         )}
@@ -347,11 +360,11 @@ export default function PickHabjuDemo() {
                   <span className="opacity-30">|</span>
                   <span>{filteredAndSortedRooms.length} 개 검색됨</span>
                 </div>
-                {/* LLM Badge */}
+                {/* Collection Badge */}
                 <div className="flex items-center gap-2 mt-3">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-deep-navy/5 border border-deep-navy/10 rounded-full text-[10px] font-mono text-deep-navy/60">
                     <span className="w-1.5 h-1.5 rounded-full bg-serene-blue animate-pulse" />
-                    LLM Semantic Extraction 으로 수집된 데이터
+                    Playwright + Booking GraphQL + 규칙 기반 정제로 수집한 데이터
                   </span>
                 </div>
               </div>

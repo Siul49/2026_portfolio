@@ -4,7 +4,7 @@ import { createPageMetadata } from "../../../lib/metadata";
 export const metadata = createPageMetadata({
   title: "Pick Habju Demo",
   description: "Interactive Pick Habju demo route inside the portfolio.",
-  keywords: ["Pick Habju demo", "LLM demo", "portfolio demo"],
+  keywords: ["Pick Habju demo", "crawler demo", "portfolio demo"],
   noIndex: true,
 });
 
