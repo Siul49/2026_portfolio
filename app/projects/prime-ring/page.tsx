@@ -1,4 +1,5 @@
 import BackLink from "../../components/ui/BackLink";
+import Button from "../../components/ui/Button";
 import SectionHeading from "../../components/ui/SectionHeading";
 import ProjectNav from "../../components/ui/ProjectNav";
 import ProjectMeta from "../../components/ui/ProjectMeta";
@@ -89,6 +90,11 @@ export default function PrimeRingDetail() {
                             PrimeRing은 <strong>로컬 파일 기반 저장소</strong>를 사용해 연결이 없어도 이벤트/다이어리 CRUD가 동작하며,
                             런타임에서 즉시 반영되는 상태 업데이트로 끊김 없는 편집 경험을 제공합니다.
                         </p>
+                        <div className="mt-6">
+                            <Button href="/projects/prime-ring/demo" size="md">
+                                TRY LIVE DEMO
+                            </Button>
+                        </div>
                     </div>
                     <div>
                         <h3 className="text-2xl font-serif font-bold mb-6 text-deep-navy">UI/UX Detail</h3>
