@@ -11,17 +11,17 @@ const summaryCards = [
   {
     title: "Problem",
     description:
-      "합주실 예약 데이터가 외부 플랫폼 구조에 크게 의존해, 작은 UI 변경에도 쉽게 깨지는 상태였습니다.",
+      "네이버 지도 검색 결과만으로는 예약 가능 지점, 가격, 방 목록이 한 번에 정리되지 않아 후보 수집과 상세 보강이 분리된 흐름이 필요했습니다.",
   },
   {
     title: "Team Role",
     description:
-      "백엔드 팀 리드로 작업 상황을 공유하고, 이슈를 미리 정리하며, 팀원들이 안정적으로 움직일 수 있게 업무를 나눴습니다.",
+      "백엔드 팀 리드로 수집 기준과 예외 처리 원칙을 정하고, 어떤 데이터를 남기고 버릴지 합의하며 크롤러와 서비스 레이어 흐름을 정리했습니다.",
   },
   {
     title: "Learning",
     description:
-      "좋은 서비스는 더 복잡한 기술보다, 문제를 어떻게 정의하고 팀의 우선순위를 어떻게 맞추는지에서 더 크게 갈린다는 점을 배웠습니다.",
+      "현재 코드는 단순 파싱보다 후보를 넓게 모으고, 다시 좁히고, 누락 정보를 복구하는 운영 규칙이 더 중요하다는 점을 보여줬습니다.",
   },
 ];
 
@@ -29,38 +29,45 @@ const pipelineSteps = [
   {
     step: 1,
     variant: "navy" as const,
-    title: "Raw HTML Cleaning",
+    title: "Priority-Area Discovery",
     description:
-      "Trafilatura로 광고, 네비게이션, 장식성 마크업을 걷어내고 예약 상세를 읽는 데 필요한 본문 텍스트만 남겼습니다.",
+      "이수·상도·사당·흑석·홍대입구·합정역 쿼리를 순차적으로 돌리고, Playwright로 네이버 지도의 Apollo state를 읽어 bookingBusinessId가 있는 예약 지점만 추렸습니다.",
   },
   {
     step: 2,
     variant: "blue" as const,
-    title: "Semantic Extraction",
+    title: "Booking GraphQL Enrichment",
     description:
-      "가격, 인원, 옵션처럼 화면 위치가 아니라 의미 단위로 읽어야 하는 정보를 LLM이 JSON으로 추출하도록 프롬프트를 설계했습니다.",
+      "선별한 businessId마다 business, bizItems, nearSubway를 조회해 지점 설명, 방 목록, 가격, 이미지, 좌표, 역세권 정보를 채웠습니다.",
   },
   {
     step: 3,
     variant: "muted" as const,
-    title: "Schema Validation",
+    title: "Fallback Recovery",
     description:
-      "Pydantic 검증과 재시도 로직으로 불완전한 응답을 걸러내고, 이후 API나 저장소에서 바로 사용할 수 있는 형태로 고정했습니다.",
+      "business 응답이 비어도 bizItems가 있으면 fallback payload로 수집을 이어가고, 대표 키워드와 전화번호가 비면 정보 탭과 전화번호 보기 흐름으로 다시 복구했습니다.",
+  },
+  {
+    step: 4,
+    variant: "muted" as const,
+    title: "Reservation-Aware Filtering",
+    description:
+      "레슨·레코딩 라벨은 제외하고, price·bookingTimeUnitCode·bookingPrecautionJson 같은 예약 메타데이터가 있는 방만 남겼습니다. 문의 필요 room은 별도 표식으로 유지했습니다.",
   },
 ];
 
-const yearlyScope = [
+const collectionLayers = [
   {
-    label: "2024",
-    title: "Semantic Crawling Prototype",
+    label: "Discovery",
+    title: "예약 가능한 지점만 남기는 1차 선별",
     description:
-      "예약 상세 HTML이 자주 바뀌는 환경에서도 DOM 의존도를 낮춘 수집 실험을 만들고, 코드 수정 없이 92% 수집 성공률을 확인했습니다.",
+      "지도 검색 결과에서 bookingBusinessId가 없는 place-only 항목은 제외하고, 우선 지역 쿼리별 source_queries를 함께 들고 가며 후보를 중복 제거합니다.",
   },
   {
-    label: "2026",
-    title: "Service-Shaped Archive",
+    label: "Recovery",
+    title: "비어 있는 필드를 끝까지 메우는 보강",
     description:
-      "FastAPI 기반 가용 시간 조회 API, favorites API, Supabase 저장소, 지역 단위 수집 서비스, CI/CD와 테스트 자산으로 프로젝트 스코프를 확장했습니다.",
+      "대표 키워드는 정보 탭에서, 전화번호는 전화번호 보기와 /rest/phone 응답에서 복구합니다. business 응답이 비어도 rooms가 있으면 수집을 중단하지 않습니다.",
   },
 ];
 
@@ -68,25 +75,25 @@ const assetColumns = [
   {
     title: "System",
     items: [
-      "실험을 끝내는 대신, 예약 가능 시간 조회와 favorites 같은 서비스형 API 자산으로 확장했습니다.",
-      "Supabase 저장소를 붙이며 프로토타입을 데이터 구조와 운영 관점으로 다시 정리했습니다.",
-      "전국 단위 수집과 병렬 LLM 파싱 구조를 서비스 레이어에 분리해 재사용 가능성을 높였습니다.",
+      "NaverMapCrawler는 Playwright에서 window.__APOLLO_STATE__를 읽어 PlaceSummary, PlaceDetail, BookingBusiness를 한 번에 병합합니다.",
+      "NaverRoomFetcher는 Booking GraphQL의 business, bizItems, nearSubway를 조회하고, business가 비어도 rooms가 있으면 fallback payload로 계속 진행합니다.",
+      "RoomParserService는 룸 이름과 설명에 regex를 적용해 인원, 추가요금, 1시간 예약 가능 여부, 시간대별 가격 설정을 구조화합니다.",
     ],
   },
   {
-    title: "Coordination",
+    title: "Filtering",
     items: [
-      "팀이 같은 목표를 보게 하려면 기술 설명보다 먼저 기준과 우선순위를 맞추는 일이 필요하다는 걸 체감했습니다.",
-      "누가 어떤 작업을 맡고 있고 어디서 막히는지 공유하는 방식이 일정 안정성에 직접 연결된다는 걸 배웠습니다.",
-      "구현보다 먼저 문제를 잘게 나누고, 지금 무엇을 풀어야 하는지 정리하는 역할의 중요성을 느꼈습니다.",
+      "지점명 -> 대표 키워드 -> 소개글 -> 룸 이름 순의 waterfall 로직으로 합주실 도메인인지 판별합니다.",
+      "room name에 레슨·레코딩이 들어가면 제외하고, 예약 메타데이터가 없는 방도 걸러냅니다.",
+      "당일 문의 필요 여부는 structured text와 policy text를 다시 확인해 room을 버릴지 표식만 남길지 구분합니다.",
     ],
   },
   {
     title: "Operations",
     items: [
-      "Rate limit, 예외 envelope, CORS, 테스트, CI/CD처럼 운영에 필요한 기본 자산을 함께 붙였습니다.",
-      "프로토타입을 서비스로 확장할수록 기능보다 예외 처리와 회귀 확인이 더 중요하다는 점을 배웠습니다.",
-      "2026 아카이브는 성과를 과장하기보다, 실험 이후 어떤 구조를 남겼는지 보여주는 근거로 정리했습니다.",
+      "지도 검색과 GraphQL 상세조회 모두 rate-limit retry, backoff, jitter를 두어 burst를 줄였습니다.",
+      "NAVER_COOKIE_HEADER와 storage state를 받아 인증 쿠키를 재사용할 수 있게 했습니다.",
+      "대표 키워드와 전화번호가 비면 정보 탭, 전화번호 보기, /rest/phone 응답까지 따라가며 누락 필드를 채웁니다.",
     ],
   },
 ];
@@ -101,22 +108,23 @@ export default function PickHabjuDetail() {
           <div className="md:col-span-8">
             <SectionHeading className="mb-6">Pick Habju</SectionHeading>
             <p className="max-w-3xl text-xl leading-relaxed font-light text-neutral-600">
-              합주실 예약 데이터를 덜 깨지게 읽는 실험에서 출발해, 백엔드 팀
-              리드 경험과 2026 서비스 아카이브까지 연결된 프로젝트입니다.
+              현재 Pick Habju는 우선 지역 쿼리 수집, Booking GraphQL 상세조회,
+              정보 탭 보강, 예약 메타데이터 필터를 묶어 실제 예약 가능한
+              합주실 정보를 채우는 프로젝트입니다.
             </p>
             <p className="mt-4 font-mono text-xs tracking-[0.24em] text-serene-blue uppercase">
-              Problem framing, coordination, and semantic crawling
+              Priority-area collection, GraphQL enrichment, and reservation-aware filtering
             </p>
             <div className="mt-6">
-              <Button href="/projects/pick-habju/demo">OPEN PROTOTYPE DEMO</Button>
+              <Button href="/projects/pick-habju/demo">OPEN COLLECTION FLOW DEMO</Button>
             </div>
           </div>
           <div className="md:col-span-4">
             <ProjectMeta
               items={[
                 { label: "ROLE", value: "Back-end Lead" },
-                { label: "FOCUS", value: "Problem Framing, Coordination, API Design" },
-                { label: "SPAN", value: "2024 Prototype -> 2026 Archive" },
+                { label: "FOCUS", value: "Crawler Orchestration, Filtering Rules, API Design" },
+                { label: "BASELINE", value: "2026 Current Code" },
               ]}
             />
           </div>
@@ -126,22 +134,23 @@ export default function PickHabjuDetail() {
       <section className="grid grid-cols-1 gap-12 md:grid-cols-12">
         <div className="md:col-span-4">
           <h3 className="mb-4 text-lg font-bold font-serif text-deep-navy">
-            Impact First
+            Current Collection
           </h3>
           <p className="text-sm leading-relaxed font-light text-neutral-600">
-            이 프로젝트는 기술적 난이도보다, 팀이 어디에 집중해야 하는지를
-            정하는 경험으로 더 오래 남았습니다. DOM 변화에 모두가 끌려가지
-            않도록 "덜 깨지는 시스템"이라는 목표를 먼저 합의한 뒤 작업을
-            나눴고, 그 기준이 프로젝트 전체의 방향을 잡아줬습니다.
+            현재 코드는 단일 페이지에서 텍스트를 뽑아내는 수준이 아니라,
+            후보를 넓게 모으고, 예약 가능한 business만 좁히고, 누락 정보를
+            다시 보강하는 다단계 수집 흐름으로 발전했습니다. 이 설명은 현재
+            dev 브랜치의 crawler와 service 코드를 기준으로 다시 정리했습니다.
           </p>
 
           <div className="mt-8 border-l border-serene-blue pl-5">
             <p className="font-mono text-xs tracking-widest text-serene-blue uppercase">
-              Key Result
+              Current Baseline
             </p>
-            <p className="mt-3 text-4xl font-serif text-deep-navy">92%</p>
+            <p className="mt-3 text-4xl font-serif text-deep-navy">2026</p>
             <p className="mt-2 text-sm leading-relaxed font-light text-neutral-600">
-              2024 프로토타입 기준 코드 수정 없이 유지한 수집 성공률
+              우선 지역 쿼리, Booking GraphQL, 정보 탭 보강, 예약 메타데이터
+              필터를 기준으로 설명을 최신화했습니다.
             </p>
           </div>
         </div>
@@ -165,7 +174,7 @@ export default function PickHabjuDetail() {
 
           <div className="rounded-lg border border-grid-line bg-neutral-50 p-8">
             <h4 className="mb-6 font-mono text-xs tracking-widest text-serene-blue uppercase">
-              {"/// 2024 Semantic Pipeline"}
+              {"/// 2026 Current Collection Flow"}
             </h4>
             <div className="space-y-6">
               {pipelineSteps.map((step, index) => (
@@ -188,9 +197,9 @@ export default function PickHabjuDetail() {
           </div>
 
           <p className="mt-6 text-sm leading-relaxed font-light text-neutral-600">
-            포트폴리오 데모는 2024년에 검증한 semantic crawling 실험을 기준으로
-            두었고, 아래 설명에는 2026 아카이브에서 실제로 남아 있는 서비스
-            자산을 함께 반영했습니다.
+            이 페이지와 데모 설명은 현재 dev 브랜치에서 실제로 동작하는
+            candidate discovery, GraphQL enrichment, fallback recovery, room
+            filtering 규칙을 기준으로 다시 맞췄습니다.
           </p>
         </div>
       </section>
@@ -198,11 +207,11 @@ export default function PickHabjuDetail() {
       <section className="mt-16 grid grid-cols-1 gap-12 border-t border-grid-line pt-16 md:grid-cols-12">
         <div className="md:col-span-4">
           <h3 className="mb-4 text-lg font-bold font-serif text-deep-navy">
-            Scope By Year
+            Current Collection Layers
           </h3>
         </div>
         <div className="grid grid-cols-1 gap-4 md:col-span-8 md:grid-cols-2">
-          {yearlyScope.map((item) => (
+          {collectionLayers.map((item) => (
             <div
               key={item.label}
               className="rounded-sm border border-grid-line bg-neutral-50/70 p-6"
@@ -222,11 +231,11 @@ export default function PickHabjuDetail() {
       <section className="mt-16 grid grid-cols-1 gap-12 border-t border-grid-line pt-16 md:grid-cols-12">
         <div className="md:col-span-4">
           <h3 className="mb-4 text-lg font-bold font-serif text-deep-navy">
-            What Grew In 2026
+            What The Current Code Does
           </h3>
           <p className="text-sm leading-relaxed font-light text-neutral-600">
-            2024의 실험 성과만 남기는 대신, 2026년에 어떤 자산이 추가되며
-            프로젝트가 서비스 형태로 확장됐는지를 함께 보여주고 싶었습니다.
+            이 페이지는 과거 실험 요약이 아니라, 현재 수집 코드가 실제로 어떤
+            단계와 규칙으로 움직이는지 보여주는 설명에 맞춰 다시 썼습니다.
           </p>
         </div>
         <div className="grid grid-cols-1 gap-4 md:col-span-8 md:grid-cols-3">
@@ -256,10 +265,11 @@ export default function PickHabjuDetail() {
         </div>
         <div className="md:col-span-8">
           <p className="leading-relaxed font-light text-neutral-600">
-            Pick Habju를 하며 저는 개발이 잘 된다고 프로젝트가 자동으로 앞으로
-            나아가지는 않는다는 것을 배웠습니다. 누가 어떤 문제를 먼저 풀지,
-            진행 상황을 어떻게 공유할지, 막히는 지점을 언제 드러낼지를 정하는
-            일이 중요했고, 이 경험이 PM 역할에 관심을 갖게 된 가장 큰 계기였습니다.
+            Pick Habju를 하며 저는 기술 스택보다 먼저 합의해야 하는 것이 어떤
+            후보를 살리고 버릴지, 누락 정보를 어디까지 복구할지, 문의 필요 room을
+            실패로 볼지 보류로 볼지 같은 운영 기준이라는 점을 배웠습니다. 현재
+            수집 흐름을 정리한 경험은 문제 정의와 우선순위 설계에 더 가까운
+            배움으로 남았습니다.
           </p>
         </div>
       </section>

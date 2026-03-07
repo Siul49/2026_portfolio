@@ -4,12 +4,13 @@ import { createPageMetadata } from "../../lib/metadata";
 export const metadata = createPageMetadata({
   title: "Pick Habju",
   description:
-    "A Pick Habju case study spanning a 2024 semantic crawling prototype and 2026 service-shaped backend assets, including FastAPI APIs, Supabase persistence, and testing.",
+    "A Pick Habju case study based on the current 2026 crawler flow: priority-area discovery, Apollo state parsing, Booking GraphQL enrichment, fallback recovery, and reservation-aware filtering.",
   keywords: [
     "Pick Habju",
-    "semantic crawling",
+    "Playwright crawler",
+    "Booking GraphQL",
+    "reservation filtering",
     "FastAPI",
-    "Supabase",
     "backend archive",
   ],
 });
